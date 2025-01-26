@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1744C52C2D45E10800878C4A /* BLPowerCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1744C52B2D45E10800878C4A /* BLPowerCondition.m */; };
 		177393D52D449B39004DE27F /* BetterLoginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 177393D32D449B39004DE27F /* BetterLoginWindowController.m */; };
 		177393D62D449B39004DE27F /* BetterLoginWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 177393D42D449B39004DE27F /* BetterLoginWindowController.xib */; };
 		177393D92D449BDC004DE27F /* BLWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 177393D82D449BDC004DE27F /* BLWindow.m */; };
@@ -25,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1744C52A2D45E10800878C4A /* BLPowerCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLPowerCondition.h; sourceTree = "<group>"; };
+		1744C52B2D45E10800878C4A /* BLPowerCondition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLPowerCondition.m; sourceTree = "<group>"; };
 		177393D22D449B39004DE27F /* BetterLoginWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BetterLoginWindowController.h; sourceTree = "<group>"; };
 		177393D32D449B39004DE27F /* BetterLoginWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BetterLoginWindowController.m; sourceTree = "<group>"; };
 		177393D42D449B39004DE27F /* BetterLoginWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetterLoginWindowController.xib; sourceTree = "<group>"; };
@@ -108,9 +111,11 @@
 				17ADB32A2D41DDB8003D0CBF /* battery-light.png */,
 				1797B8E42780B6E50054BFCD /* BetterLogin.h */,
 				1797B8E52780B6E50054BFCD /* BetterLogin.m */,
-				177393D22D449B39004DE27F /* BetterLoginWindowController.h */,
+				1744C52A2D45E10800878C4A /* BLPowerCondition.h */,
+				1744C52B2D45E10800878C4A /* BLPowerCondition.m */,
 				177393D72D449BDC004DE27F /* BLWindow.h */,
 				177393D82D449BDC004DE27F /* BLWindow.m */,
+				177393D22D449B39004DE27F /* BetterLoginWindowController.h */,
 				177393D32D449B39004DE27F /* BetterLoginWindowController.m */,
 				177393D42D449B39004DE27F /* BetterLoginWindowController.xib */,
 				1797B8E72780B6E50054BFCD /* ZKSwizzle */,
@@ -256,6 +261,7 @@
 			files = (
 				1797B8E62780B6E50054BFCD /* BetterLogin.m in Sources */,
 				177393D52D449B39004DE27F /* BetterLoginWindowController.m in Sources */,
+				1744C52C2D45E10800878C4A /* BLPowerCondition.m in Sources */,
 				1797B8EA2780B6E50054BFCD /* ZKSwizzle.m in Sources */,
 				177393D92D449BDC004DE27F /* BLWindow.m in Sources */,
 			);
@@ -416,6 +422,7 @@
 				INFOPLIST_FILE = BetterLogin/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/MacEnhance/Plugins";
 				MACH_O_TYPE = mh_dylib;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtac.BetterLogin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
@@ -443,6 +450,7 @@
 				INFOPLIST_FILE = BetterLogin/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/MacEnhance/Plugins";
 				MACH_O_TYPE = mh_dylib;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtac.BetterLogin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ZKSwizzle/ZKSwizzle.h"
 #import "BetterLoginWindowController.h"
+#import "BLPowerCondition.h"
 #include <dlfcn.h>
 
 #define osx_ver_max [[NSProcessInfo processInfo] operatingSystemVersion].majorVersion
@@ -31,6 +32,8 @@ NSVisualEffectMaterialUnderPageBackground = 22,
 */
 
 @interface BetterLogin : NSObject
+@property (nonatomic, strong) NSImageView *batteryImageView;
+@property (nonatomic, strong) NSTextField *batteryPercentField;
 + (instancetype)sharedInstance;
 @end
 
@@ -78,4 +81,7 @@ NSVisualEffectMaterialUnderPageBackground = 22,
 @interface LUI2MessageViewController : LUI2ViewController
 @property NSLayoutConstraint *messageTextViewHeightConstraint;
 @property (readonly) NSTextView *messageTextView;
+@end
+
+@interface LUI2BackgroundViewController : LUI2ViewController
 @end

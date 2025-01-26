@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BetterLoginWindowController : NSWindowController
+@interface BetterLoginWindowController : NSWindowController <NSWindowDelegate>
 @end
 
 NS_ASSUME_NONNULL_END

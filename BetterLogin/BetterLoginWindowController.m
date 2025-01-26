@@ -11,6 +11,9 @@
 @end
 
 @implementation BetterLoginWindowController
+- (NSNibName)windowNibName {
+    return @"BetterLoginWindowController";
+}
 - (void)windowDidLoad {
     [super windowDidLoad];
     

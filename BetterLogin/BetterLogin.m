@@ -11,6 +11,10 @@
 #include <ifaddrs.h>
 #include <arpa/inet.h>
 
+#include <os/log.h>
+#define DLog(N, ...) os_log_with_type(os_log_create("com.mtac.BetterLogin", "DEBUG"),OS_LOG_TYPE_DEFAULT,N ,##__VA_ARGS__)
+
+
 static NSUserDefaults *defaults;
 
 BOOL containsKey(NSString *key) {
@@ -72,27 +76,6 @@ static NSString *internetAddress() {
     return address;
 }
 
-@interface AMPTextFieldCell : NSTextFieldCell
-@end
-
-@implementation AMPTextFieldCell
-- (NSRect)titleRectForBounds:(NSRect)frame {
-    CGFloat stringHeight = self.attributedStringValue.size.height;
-    CGFloat stringWidth = self.attributedStringValue.size.width;
-    NSRect titleRect = [super titleRectForBounds:frame];
-    CGFloat originY = frame.origin.y;
-    CGFloat originX = frame.origin.x;
-    titleRect.origin.y = frame.origin.y + (frame.size.height - stringHeight) / 2.0;
-    titleRect.size.height = titleRect.size.height - (titleRect.origin.y - originY);
-    titleRect.origin.x = frame.origin.x + (frame.size.width - stringWidth) / 2.0;
-    titleRect.size.width = titleRect.size.width - (titleRect.origin.x - originX);
-    return titleRect;
-}
-- (void)drawInteriorWithFrame:(NSRect)cFrame inView:(NSView*)cView {
-    [super drawInteriorWithFrame:[self titleRectForBounds:cFrame] inView:cView];
-}
-@end
-
 BetterLogin *plugin;
 static NSMutableDictionary *preferences = nil;
 
@@ -111,6 +94,27 @@ static NSMutableDictionary *preferences = nil;
 }
 + (void)load {
     plugin = [BetterLogin sharedInstance];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBatteryInfo) name:kPowerConditionChangedNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBatteryInfo) name:NSProcessInfoPowerStateDidChangeNotification object:nil];
+    
+    BLPowerCondition *condition = [[BLPowerCondition alloc] init];
+    [condition startMonitoringCondition];
+    
+    if (!plugin.batteryImageView) plugin.batteryImageView = [[NSImageView alloc] initWithFrame:CGRectZero];
+    plugin.batteryImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    plugin.batteryImageView.imageScaling = NSImageScaleProportionallyDown;
+    
+    if (!plugin.batteryPercentField) plugin.batteryPercentField = [[NSTextField alloc] initWithFrame:CGRectZero];
+    plugin.batteryPercentField.translatesAutoresizingMaskIntoConstraints = NO;
+    plugin.batteryPercentField.alignment = NSTextAlignmentCenter;
+    plugin.batteryPercentField.editable = NO;
+    plugin.batteryPercentField.bordered = NO;
+    plugin.batteryPercentField.drawsBackground = NO;
+    plugin.batteryPercentField.textColor = [NSColor colorWithWhite:0.0 alpha:0.6];
+    plugin.batteryPercentField.font = [NSFont systemFontOfSize:12 weight:NSFontWeightBold];
+    
     defaults = [[NSUserDefaults alloc] initWithSuiteName:@"com.mtac.betterlogin"];
     if (!containsKey(@"horizontalOffset")) {
         [defaults setObject:@(-40) forKey:@"horizontalOffset"];
@@ -131,11 +135,97 @@ static NSMutableDictionary *preferences = nil;
         [defaults setObject:@(6) forKey:@"selectedBlurStyle"];
     }
     [defaults synchronize];
+    
+    [plugin updateBatteryInfo];
 }
-- (id)init {
-    self = [super init];
-    if (!self) return nil;
-    return self;
+- (void)updateBatteryInfo {
+    kern_return_t result;
+    mach_port_t port = 0;
+    io_registry_entry_t entry = IOServiceGetMatchingService(port, IOServiceMatching("IOPMPowerSource"));
+    CFMutableDictionaryRef rawProperties = NULL;
+    result = IORegistryEntryCreateCFProperties(entry, &rawProperties, NULL, 0);
+    NSDictionary *properties = (__bridge_transfer NSDictionary *)rawProperties;
+    
+    BOOL charging = [[properties objectForKey:@"ExternalConnected"] boolValue];
+    
+    double capacityRemaining = [[properties objectForKey:@"CurrentCapacity"] doubleValue];
+    double maxCapacity = [[properties objectForKey:@"MaxCapacity"] doubleValue];
+    int percentage = (int)((capacityRemaining / maxCapacity) * 100);
+    NSString *percentageString = [NSString stringWithFormat:@"%d", percentage];
+    
+    [plugin.batteryImageView setImage:[plugin batteryImageWithPercent:(capacityRemaining / maxCapacity) charging:charging]];
+    [plugin.batteryPercentField setStringValue:percentageString];
+}
+- (NSImage *)batteryImageWithPercent:(CGFloat)percent charging:(BOOL)charging {
+    NSBundle *mainBundle = [NSBundle bundleWithPath:@"/Library/Application Support/MacEnhance/Plugins/BetterLogin.bundle"];
+    NSImage *batteryImage = [[NSImage alloc] initWithContentsOfFile:[mainBundle pathForResource:@"battery-light" ofType:@"png"]];
+    NSImage *croppedBatteryImage;
+    if (charging) {
+        croppedBatteryImage = [self image:[self cropImage:batteryImage toWidthPercentage:percent] tintedWithColor:[NSColor greenColor]];
+    } else {
+        croppedBatteryImage = [self image:[self cropImage:batteryImage toWidthPercentage:percent] tintedWithColor:[NSColor whiteColor]];
+    }
+    
+    if ((NSInteger)(percent * 100) <= 10) {
+        croppedBatteryImage = [self image:[self cropImage:batteryImage toWidthPercentage:percent] tintedWithColor:[NSColor redColor]];
+    }
+     
+    NSImage *finalImage = [self overlayImage:batteryImage withImage:croppedBatteryImage];
+    return finalImage;
+}
+- (NSImage *)cropImage:(NSImage *)image toWidthPercentage:(CGFloat)percentage {
+    if (!image || percentage <= 0.0 || percentage > 1.0) {
+        return nil;
+    }
+    NSSize originalSize = [image size];
+    
+    CGFloat croppedWidth = originalSize.width * percentage;
+    CGFloat croppedHeight = originalSize.height;
+    
+    NSRect sourceRect = NSMakeRect(0, 0, croppedWidth, croppedHeight);
+    
+    NSImage *croppedImage = [[NSImage alloc] initWithSize:NSMakeSize(originalSize.width, croppedHeight)];
+    
+
+    [croppedImage lockFocus];
+    [image drawInRect:NSMakeRect(0, 0, croppedWidth, croppedHeight)
+             fromRect:sourceRect
+            operation:NSCompositingOperationCopy
+             fraction:1];
+    [croppedImage unlockFocus];
+    
+    return croppedImage;
+}
+- (NSImage *)overlayImage:(NSImage *)image1 withImage:(NSImage *)image2 {
+    if (!image1 || !image2) {
+        return nil;
+    }
+    NSSize finalSize = [image1 size];
+    NSImage *resultImage = [[NSImage alloc] initWithSize:finalSize];
+    [resultImage lockFocus];
+    
+    [image1 drawInRect:NSMakeRect(0, 0, finalSize.width, finalSize.height)
+              fromRect:NSZeroRect
+             operation:NSCompositingOperationSourceOver
+              fraction:0.6];
+    
+    [image2 drawInRect:NSMakeRect(0, 0, finalSize.width, finalSize.height)
+              fromRect:NSZeroRect
+             operation:NSCompositingOperationSourceOver
+              fraction:1.0];
+    [resultImage unlockFocus];
+    
+    return resultImage;
+}
+- (NSImage *)image:(NSImage *)image tintedWithColor:(NSColor *)tint {
+    if (tint) {
+        [image lockFocus];
+        [tint set];
+        NSRect imageRect = {NSZeroPoint, [image size]};
+        NSRectFillUsingOperation(imageRect, NSCompositingOperationSourceAtop);
+        [image unlockFocus];
+    }
+    return image;
 }
 @end
 
@@ -155,7 +245,7 @@ ZKSwizzleInterface(bl_LUI2DateViewController, LUI2DateViewController, NSViewCont
     // [dateField setHidden:YES];
 }
 - (void)_timerFired {
-    NSDateFormatter * formatter =  [[NSDateFormatter alloc] init];
+    NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMMM d"];
     NSString *dateString = [formatter stringFromDate:NSDate.date];
     NSTextField *dateField = ZKHookIvar(self, NSTextField *, "_dateTextField");
@@ -224,9 +314,6 @@ ZKSwizzleInterface(bl_LUI2ScreenLockController, LUI2ScreenLockController, NSObje
 @implementation bl_LUI2ScreenLockController
 - (void)viewDidLoad {
     ZKOrig(void);
-    for (NSWindow *window in [[NSApplication sharedApplication] windows]) {
-        dumpViews([window contentView], 0);
-    }
 }
 - (double)_bigTimeConstraintConstant {
     return ZKOrig(double);
@@ -237,6 +324,7 @@ ZKSwizzleInterface(bl_LUI2BackgroundViewController, LUI2BackgroundViewController
 @implementation bl_LUI2BackgroundViewController
 - (void)viewDidLoad {
     ZKOrig(void);
+
     NSInteger selectedBlurStyle = [[defaults objectForKey:@"selectedBlurStyle"] integerValue];
     
     NSVisualEffectView *vibrant = [[NSVisualEffectView alloc] initWithFrame:self.view.frame];
@@ -246,7 +334,7 @@ ZKSwizzleInterface(bl_LUI2BackgroundViewController, LUI2BackgroundViewController
     [vibrant setState:NSVisualEffectStateActive];
     [self.view addSubview:vibrant positioned:NSWindowBelow relativeTo:self.view];
     
-    NSButton *blurSettings = [[NSButton alloc] init];
+    /* NSButton *blurSettings = [[NSButton alloc] init];
     blurSettings.image = [NSImage imageWithSystemSymbolName:@"gearshape.fill" accessibilityDescription:@""];
     blurSettings.alphaValue = 0.25;
     blurSettings.translatesAutoresizingMaskIntoConstraints = NO;
@@ -256,102 +344,27 @@ ZKSwizzleInterface(bl_LUI2BackgroundViewController, LUI2BackgroundViewController
     [blurSettings setBordered:NO];
     [blurSettings setBezelStyle:NSBezelStyleRegularSquare];
     [blurSettings setImageScaling:NSImageScaleProportionallyUpOrDown];
-    [self.view addSubview:blurSettings];
+    [self.view addSubview:blurSettings]; */
     
-    NSImageView *batteryImageView = [[NSImageView alloc] initWithFrame:CGRectZero];
-    batteryImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    batteryImageView.imageScaling = NSImageScaleProportionallyDown;
-    
-    [self.view addSubview:batteryImageView];
-    [batteryImageView setImage:[self batteryImageWithPercent:batteryPercentage()]];
-    
-    NSTextField *batteryPercentField = [[NSTextField alloc] initWithFrame:CGRectZero];
-    batteryPercentField.translatesAutoresizingMaskIntoConstraints = NO;
-    batteryPercentField.font = [NSFont systemFontOfSize:[[defaults objectForKey:@"batteryFontSize"] integerValue] weight:NSFontWeightBold];
-    batteryPercentField.alignment = NSTextAlignmentCenter;
-    batteryPercentField.editable = NO;
-    batteryPercentField.bordered = NO;
-    batteryPercentField.drawsBackground = NO;
-    // batteryPercentField.cell = [AMPTextFieldCell new];
-    batteryPercentField.textColor = [NSColor colorWithWhite:0.0 alpha:0.6];
-    [batteryPercentField setStringValue:[NSString stringWithFormat:@"%d", (int)(batteryPercentage() * 100)]];
-    [self.view addSubview:batteryPercentField];
+    [self.view addSubview:plugin.batteryImageView];
+    [self.view addSubview:plugin.batteryPercentField];
     
     [NSLayoutConstraint activateConstraints:@[
-        [batteryImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:[[defaults objectForKey:@"horizontalOffset"] integerValue]],
-        [batteryImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:[[defaults objectForKey:@"verticalOffset"] integerValue]],
-        [batteryImageView.widthAnchor constraintEqualToConstant:32],
-        [batteryImageView.heightAnchor constraintEqualToConstant:20],
-        [batteryPercentField.centerYAnchor constraintEqualToAnchor:batteryImageView.centerYAnchor constant:2],
-        [batteryPercentField.heightAnchor constraintEqualToConstant:20],
-        [batteryPercentField.leadingAnchor constraintEqualToAnchor:batteryImageView.leadingAnchor],
-        [batteryPercentField.trailingAnchor constraintEqualToAnchor:batteryImageView.trailingAnchor constant:-2],
-        [blurSettings.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:6],
+        [plugin.batteryImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:[[defaults objectForKey:@"horizontalOffset"] integerValue]],
+        [plugin.batteryImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:[[defaults objectForKey:@"verticalOffset"] integerValue]],
+        [plugin.batteryImageView.widthAnchor constraintEqualToConstant:32],
+        [plugin.batteryImageView.heightAnchor constraintEqualToConstant:20],
+        [plugin.batteryPercentField.centerYAnchor constraintEqualToAnchor:plugin.batteryImageView.centerYAnchor constant:2],
+        [plugin.batteryPercentField.heightAnchor constraintEqualToConstant:20],
+        [plugin.batteryPercentField.leadingAnchor constraintEqualToAnchor:plugin.batteryImageView.leadingAnchor],
+        [plugin.batteryPercentField.trailingAnchor constraintEqualToAnchor:plugin.batteryImageView.trailingAnchor constant:-2],
+        /* [blurSettings.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:6],
         [blurSettings.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:10],
         [blurSettings.widthAnchor constraintEqualToConstant:20],
-        [blurSettings.heightAnchor constraintEqualToConstant:20],
+        [blurSettings.heightAnchor constraintEqualToConstant:20], */
     ]];
-}
-- (NSImage *)batteryImageWithPercent:(CGFloat)percent {
-    NSBundle *mainBundle = [NSBundle bundleWithPath:@"/Library/Application Support/MacEnhance/Plugins/BetterLogin.bundle"];
-    NSImage *batteryImage = [[NSImage alloc] initWithContentsOfFile:[mainBundle pathForResource:@"battery-light" ofType:@"png"]];
-    NSImage *croppedBatteryImage = [self image:[self cropImage:batteryImage toWidthPercentage:percent] tintedWithColor:[NSColor whiteColor]];
-    NSImage *finalImage = [self overlayImage:batteryImage withImage:croppedBatteryImage];
-    return finalImage;
-}
-- (NSImage *)cropImage:(NSImage *)image toWidthPercentage:(CGFloat)percentage {
-    if (!image || percentage <= 0.0 || percentage > 1.0) {
-        return nil;
-    }
-    NSSize originalSize = [image size];
     
-    CGFloat croppedWidth = originalSize.width * percentage;
-    CGFloat croppedHeight = originalSize.height;
-    
-    NSRect sourceRect = NSMakeRect(0, 0, croppedWidth, croppedHeight);
-    
-    NSImage *croppedImage = [[NSImage alloc] initWithSize:NSMakeSize(originalSize.width, croppedHeight)];
-    
-
-    [croppedImage lockFocus];
-    [image drawInRect:NSMakeRect(0, 0, croppedWidth, croppedHeight)
-             fromRect:sourceRect
-            operation:NSCompositingOperationCopy
-             fraction:1];
-    [croppedImage unlockFocus];
-    
-    return croppedImage;
-}
-- (NSImage *)overlayImage:(NSImage *)image1 withImage:(NSImage *)image2 {
-    if (!image1 || !image2) {
-        return nil;
-    }
-    NSSize finalSize = [image1 size];
-    NSImage *resultImage = [[NSImage alloc] initWithSize:finalSize];
-    [resultImage lockFocus];
-    
-    [image1 drawInRect:NSMakeRect(0, 0, finalSize.width, finalSize.height)
-              fromRect:NSZeroRect
-             operation:NSCompositingOperationSourceOver
-              fraction:0.6];
-    
-    [image2 drawInRect:NSMakeRect(0, 0, finalSize.width, finalSize.height)
-              fromRect:NSZeroRect
-             operation:NSCompositingOperationSourceOver
-              fraction:1.0];
-    [resultImage unlockFocus];
-    
-    return resultImage;
-}
-- (NSImage *)image:(NSImage *)image tintedWithColor:(NSColor *)tint {
-    if (tint) {
-        [image lockFocus];
-        [tint set];
-        NSRect imageRect = {NSZeroPoint, [image size]};
-        NSRectFillUsingOperation(imageRect, NSCompositingOperationSourceAtop);
-        [image unlockFocus];
-    }
-    return image;
+    [plugin updateBatteryInfo];
 }
 - (void)openSettings:(id)sender {
     BetterLoginWindowController *windowController = [[BetterLoginWindowController alloc] init];
