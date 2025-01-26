@@ -1,0 +1,549 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		177393D52D449B39004DE27F /* BetterLoginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 177393D32D449B39004DE27F /* BetterLoginWindowController.m */; };
+		177393D62D449B39004DE27F /* BetterLoginWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 177393D42D449B39004DE27F /* BetterLoginWindowController.xib */; };
+		177393D92D449BDC004DE27F /* BLWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 177393D82D449BDC004DE27F /* BLWindow.m */; };
+		1797B8DD2780B6E50054BFCD /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1797B8DC2780B6E50054BFCD /* AppKit.framework */; };
+		1797B8DF2780B6E50054BFCD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1797B8DE2780B6E50054BFCD /* Foundation.framework */; };
+		1797B8E62780B6E50054BFCD /* BetterLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1797B8E52780B6E50054BFCD /* BetterLogin.m */; };
+		1797B8EA2780B6E50054BFCD /* ZKSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 1797B8E92780B6E50054BFCD /* ZKSwizzle.m */; };
+		1797B8EC2780B6E50054BFCD /* PrefixHeader.pch in Resources */ = {isa = PBXBuildFile; fileRef = 1797B8EB2780B6E50054BFCD /* PrefixHeader.pch */; };
+		17ADB32B2D41DDB8003D0CBF /* battery-light.png in Resources */ = {isa = PBXBuildFile; fileRef = 17ADB32A2D41DDB8003D0CBF /* battery-light.png */; };
+		17F50EAD2A7AF78800D77BB4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F50EAC2A7AF78800D77BB4 /* AppDelegate.m */; };
+		17F50EB02A7AF78800D77BB4 /* BLController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F50EAF2A7AF78800D77BB4 /* BLController.m */; };
+		17F50EB22A7AF78900D77BB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17F50EB12A7AF78900D77BB4 /* Assets.xcassets */; };
+		17F50EB52A7AF78900D77BB4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17F50EB32A7AF78900D77BB4 /* Main.storyboard */; };
+		17F50EB72A7AF78900D77BB4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F50EB62A7AF78900D77BB4 /* main.m */; };
+		17F50EBE2A7AF90500D77BB4 /* BLWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F50EBD2A7AF90500D77BB4 /* BLWindowController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		177393D22D449B39004DE27F /* BetterLoginWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BetterLoginWindowController.h; sourceTree = "<group>"; };
+		177393D32D449B39004DE27F /* BetterLoginWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BetterLoginWindowController.m; sourceTree = "<group>"; };
+		177393D42D449B39004DE27F /* BetterLoginWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetterLoginWindowController.xib; sourceTree = "<group>"; };
+		177393D72D449BDC004DE27F /* BLWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLWindow.h; sourceTree = "<group>"; };
+		177393D82D449BDC004DE27F /* BLWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLWindow.m; sourceTree = "<group>"; };
+		1797B8D92780B6E50054BFCD /* BetterLogin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BetterLogin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		1797B8DC2780B6E50054BFCD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1797B8DE2780B6E50054BFCD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		1797B8E22780B6E50054BFCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1797B8E42780B6E50054BFCD /* BetterLogin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BetterLogin.h; sourceTree = "<group>"; };
+		1797B8E52780B6E50054BFCD /* BetterLogin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BetterLogin.m; sourceTree = "<group>"; };
+		1797B8E82780B6E50054BFCD /* ZKSwizzle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZKSwizzle.h; sourceTree = "<group>"; };
+		1797B8E92780B6E50054BFCD /* ZKSwizzle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZKSwizzle.m; sourceTree = "<group>"; };
+		1797B8EB2780B6E50054BFCD /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		17ADB32A2D41DDB8003D0CBF /* battery-light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "battery-light.png"; sourceTree = "<group>"; };
+		17F50EA92A7AF78800D77BB4 /* BetterLogin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterLogin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		17F50EAB2A7AF78800D77BB4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		17F50EAC2A7AF78800D77BB4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		17F50EAE2A7AF78800D77BB4 /* BLController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLController.h; sourceTree = "<group>"; };
+		17F50EAF2A7AF78800D77BB4 /* BLController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLController.m; sourceTree = "<group>"; };
+		17F50EB12A7AF78900D77BB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		17F50EB42A7AF78900D77BB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		17F50EB62A7AF78900D77BB4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		17F50EB82A7AF78900D77BB4 /* BetterLoginApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BetterLoginApp.entitlements; sourceTree = "<group>"; };
+		17F50EBC2A7AF90500D77BB4 /* BLWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLWindowController.h; sourceTree = "<group>"; };
+		17F50EBD2A7AF90500D77BB4 /* BLWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLWindowController.m; sourceTree = "<group>"; };
+		17F50EBF2A7B150100D77BB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1797B8D62780B6E50054BFCD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1797B8DD2780B6E50054BFCD /* AppKit.framework in Frameworks */,
+				1797B8DF2780B6E50054BFCD /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17F50EA62A7AF78800D77BB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1797B8D02780B6E50054BFCD = {
+			isa = PBXGroup;
+			children = (
+				1797B8E02780B6E50054BFCD /* BetterLogin */,
+				17F50EAA2A7AF78800D77BB4 /* BetterLoginApp */,
+				1797B8DB2780B6E50054BFCD /* Frameworks */,
+				1797B8DA2780B6E50054BFCD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1797B8DA2780B6E50054BFCD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1797B8D92780B6E50054BFCD /* BetterLogin.bundle */,
+				17F50EA92A7AF78800D77BB4 /* BetterLogin.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1797B8DB2780B6E50054BFCD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1797B8DC2780B6E50054BFCD /* AppKit.framework */,
+				1797B8DE2780B6E50054BFCD /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1797B8E02780B6E50054BFCD /* BetterLogin */ = {
+			isa = PBXGroup;
+			children = (
+				17ADB32A2D41DDB8003D0CBF /* battery-light.png */,
+				1797B8E42780B6E50054BFCD /* BetterLogin.h */,
+				1797B8E52780B6E50054BFCD /* BetterLogin.m */,
+				177393D22D449B39004DE27F /* BetterLoginWindowController.h */,
+				177393D72D449BDC004DE27F /* BLWindow.h */,
+				177393D82D449BDC004DE27F /* BLWindow.m */,
+				177393D32D449B39004DE27F /* BetterLoginWindowController.m */,
+				177393D42D449B39004DE27F /* BetterLoginWindowController.xib */,
+				1797B8E72780B6E50054BFCD /* ZKSwizzle */,
+				1797B8E12780B6E50054BFCD /* Supporting Files */,
+			);
+			path = BetterLogin;
+			sourceTree = "<group>";
+		};
+		1797B8E12780B6E50054BFCD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1797B8E22780B6E50054BFCD /* Info.plist */,
+				1797B8EB2780B6E50054BFCD /* PrefixHeader.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1797B8E72780B6E50054BFCD /* ZKSwizzle */ = {
+			isa = PBXGroup;
+			children = (
+				1797B8E82780B6E50054BFCD /* ZKSwizzle.h */,
+				1797B8E92780B6E50054BFCD /* ZKSwizzle.m */,
+			);
+			path = ZKSwizzle;
+			sourceTree = "<group>";
+		};
+		17F50EAA2A7AF78800D77BB4 /* BetterLoginApp */ = {
+			isa = PBXGroup;
+			children = (
+				17F50EBF2A7B150100D77BB4 /* Info.plist */,
+				17F50EAB2A7AF78800D77BB4 /* AppDelegate.h */,
+				17F50EAC2A7AF78800D77BB4 /* AppDelegate.m */,
+				17F50EAE2A7AF78800D77BB4 /* BLController.h */,
+				17F50EAF2A7AF78800D77BB4 /* BLController.m */,
+				17F50EBC2A7AF90500D77BB4 /* BLWindowController.h */,
+				17F50EBD2A7AF90500D77BB4 /* BLWindowController.m */,
+				17F50EB12A7AF78900D77BB4 /* Assets.xcassets */,
+				17F50EB32A7AF78900D77BB4 /* Main.storyboard */,
+				17F50EB62A7AF78900D77BB4 /* main.m */,
+				17F50EB82A7AF78900D77BB4 /* BetterLoginApp.entitlements */,
+			);
+			path = BetterLoginApp;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1797B8D82780B6E50054BFCD /* BetterLogin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1797B8EF2780B6E50054BFCD /* Build configuration list for PBXNativeTarget "BetterLogin" */;
+			buildPhases = (
+				1797B8D52780B6E50054BFCD /* Sources */,
+				1797B8D62780B6E50054BFCD /* Frameworks */,
+				1797B8D72780B6E50054BFCD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BetterLogin;
+			productName = BetterLogin;
+			productReference = 1797B8D92780B6E50054BFCD /* BetterLogin.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+		17F50EA82A7AF78800D77BB4 /* BetterLoginApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17F50EBB2A7AF78900D77BB4 /* Build configuration list for PBXNativeTarget "BetterLoginApp" */;
+			buildPhases = (
+				17F50EA52A7AF78800D77BB4 /* Sources */,
+				17F50EA62A7AF78800D77BB4 /* Frameworks */,
+				17F50EA72A7AF78800D77BB4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BetterLoginApp;
+			productName = BetterLoginApp;
+			productReference = 17F50EA92A7AF78800D77BB4 /* BetterLogin.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1797B8D12780B6E50054BFCD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1300;
+				TargetAttributes = {
+					1797B8D82780B6E50054BFCD = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					17F50EA82A7AF78800D77BB4 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+				};
+			};
+			buildConfigurationList = 1797B8D42780B6E50054BFCD /* Build configuration list for PBXProject "BetterLogin" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1797B8D02780B6E50054BFCD;
+			productRefGroup = 1797B8DA2780B6E50054BFCD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1797B8D82780B6E50054BFCD /* BetterLogin */,
+				17F50EA82A7AF78800D77BB4 /* BetterLoginApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1797B8D72780B6E50054BFCD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17ADB32B2D41DDB8003D0CBF /* battery-light.png in Resources */,
+				177393D62D449B39004DE27F /* BetterLoginWindowController.xib in Resources */,
+				1797B8EC2780B6E50054BFCD /* PrefixHeader.pch in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17F50EA72A7AF78800D77BB4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17F50EB22A7AF78900D77BB4 /* Assets.xcassets in Resources */,
+				17F50EB52A7AF78900D77BB4 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1797B8D52780B6E50054BFCD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1797B8E62780B6E50054BFCD /* BetterLogin.m in Sources */,
+				177393D52D449B39004DE27F /* BetterLoginWindowController.m in Sources */,
+				1797B8EA2780B6E50054BFCD /* ZKSwizzle.m in Sources */,
+				177393D92D449BDC004DE27F /* BLWindow.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17F50EA52A7AF78800D77BB4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17F50EB02A7AF78800D77BB4 /* BLController.m in Sources */,
+				17F50EBE2A7AF90500D77BB4 /* BLWindowController.m in Sources */,
+				17F50EB72A7AF78900D77BB4 /* main.m in Sources */,
+				17F50EAD2A7AF78800D77BB4 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		17F50EB32A7AF78900D77BB4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				17F50EB42A7AF78900D77BB4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1797B8ED2780B6E50054BFCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		1797B8EE2780B6E50054BFCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+			};
+			name = Release;
+		};
+		1797B8F02780B6E50054BFCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DEVELOPMENT_TEAM = 7ML54VJYG9;
+				DSTROOT = /;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/BetterLogin",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BetterLogin/PrefixHeader.pch;
+				INFOPLIST_FILE = BetterLogin/Info.plist;
+				INSTALL_PATH = "/Library/Application Support/MacEnhance/Plugins";
+				MACH_O_TYPE = mh_dylib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtac.BetterLogin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		1797B8F12780B6E50054BFCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DEVELOPMENT_TEAM = 7ML54VJYG9;
+				DSTROOT = /;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/BetterLogin",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = BetterLogin/PrefixHeader.pch;
+				INFOPLIST_FILE = BetterLogin/Info.plist;
+				INSTALL_PATH = "/Library/Application Support/MacEnhance/Plugins";
+				MACH_O_TYPE = mh_dylib;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtac.BetterLogin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		17F50EB92A7AF78900D77BB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = BetterLoginApp/BetterLoginApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7ML54VJYG9;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BetterLoginApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BetterLogin;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtac.BetterLogin;
+				PRODUCT_NAME = BetterLogin;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		17F50EBA2A7AF78900D77BB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = BetterLoginApp/BetterLoginApp.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7ML54VJYG9;
+				ENABLE_HARDENED_RUNTIME = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BetterLoginApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = BetterLogin;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtac.BetterLogin;
+				PRODUCT_NAME = BetterLogin;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1797B8D42780B6E50054BFCD /* Build configuration list for PBXProject "BetterLogin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1797B8ED2780B6E50054BFCD /* Debug */,
+				1797B8EE2780B6E50054BFCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1797B8EF2780B6E50054BFCD /* Build configuration list for PBXNativeTarget "BetterLogin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1797B8F02780B6E50054BFCD /* Debug */,
+				1797B8F12780B6E50054BFCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17F50EBB2A7AF78900D77BB4 /* Build configuration list for PBXNativeTarget "BetterLoginApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17F50EB92A7AF78900D77BB4 /* Debug */,
+				17F50EBA2A7AF78900D77BB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1797B8D12780B6E50054BFCD /* Project object */;
+}

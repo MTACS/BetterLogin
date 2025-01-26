@@ -1,0 +1,16 @@
+//
+//  PrefixHeader.pch
+//  BetterLogin
+//
+//  Created by MTAC on 1/1/22.
+//
+//
+
+#ifndef BetterLogin_PrefixHeader_pch
+#define BetterLogin_PrefixHeader_pch
+
+#import <Cocoa/Cocoa.h>
+#import "ZKSwizzle.h"
+
+#endif
+
