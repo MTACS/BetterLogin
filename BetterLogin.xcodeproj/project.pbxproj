@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		177393D52D449B39004DE27F /* BetterLoginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 177393D32D449B39004DE27F /* BetterLoginWindowController.m */; };
-		177393D62D449B39004DE27F /* BetterLoginWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 177393D42D449B39004DE27F /* BetterLoginWindowController.xib */; };
-		177393D92D449BDC004DE27F /* BLWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 177393D82D449BDC004DE27F /* BLWindow.m */; };
 		1797B8DD2780B6E50054BFCD /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1797B8DC2780B6E50054BFCD /* AppKit.framework */; };
 		1797B8DF2780B6E50054BFCD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1797B8DE2780B6E50054BFCD /* Foundation.framework */; };
 		1797B8E62780B6E50054BFCD /* BetterLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1797B8E52780B6E50054BFCD /* BetterLogin.m */; };
@@ -25,11 +22,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		177393D22D449B39004DE27F /* BetterLoginWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BetterLoginWindowController.h; sourceTree = "<group>"; };
-		177393D32D449B39004DE27F /* BetterLoginWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BetterLoginWindowController.m; sourceTree = "<group>"; };
-		177393D42D449B39004DE27F /* BetterLoginWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetterLoginWindowController.xib; sourceTree = "<group>"; };
-		177393D72D449BDC004DE27F /* BLWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLWindow.h; sourceTree = "<group>"; };
-		177393D82D449BDC004DE27F /* BLWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLWindow.m; sourceTree = "<group>"; };
 		1797B8D92780B6E50054BFCD /* BetterLogin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BetterLogin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		1797B8DC2780B6E50054BFCD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1797B8DE2780B6E50054BFCD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -108,11 +100,6 @@
 				17ADB32A2D41DDB8003D0CBF /* battery-light.png */,
 				1797B8E42780B6E50054BFCD /* BetterLogin.h */,
 				1797B8E52780B6E50054BFCD /* BetterLogin.m */,
-				177393D22D449B39004DE27F /* BetterLoginWindowController.h */,
-				177393D72D449BDC004DE27F /* BLWindow.h */,
-				177393D82D449BDC004DE27F /* BLWindow.m */,
-				177393D32D449B39004DE27F /* BetterLoginWindowController.m */,
-				177393D42D449B39004DE27F /* BetterLoginWindowController.xib */,
 				1797B8E72780B6E50054BFCD /* ZKSwizzle */,
 				1797B8E12780B6E50054BFCD /* Supporting Files */,
 			);
@@ -233,7 +220,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				17ADB32B2D41DDB8003D0CBF /* battery-light.png in Resources */,
-				177393D62D449B39004DE27F /* BetterLoginWindowController.xib in Resources */,
 				1797B8EC2780B6E50054BFCD /* PrefixHeader.pch in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,9 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1797B8E62780B6E50054BFCD /* BetterLogin.m in Sources */,
-				177393D52D449B39004DE27F /* BetterLoginWindowController.m in Sources */,
 				1797B8EA2780B6E50054BFCD /* ZKSwizzle.m in Sources */,
-				177393D92D449BDC004DE27F /* BLWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
