@@ -85,3 +85,7 @@ NSVisualEffectMaterialUnderPageBackground = 22,
 
 @interface LUI2BackgroundViewController : LUI2ViewController
 @end
+
+@interface LUI2PopoverViewController : LUI2ViewController
+- (void)presentUsingViewController:(id)controller asPopoverRelativeToRect:(CGRect)rect ofView:(id)view preferredEdge:(unsigned long long)edge behavior:(long long)behavior;
+@end

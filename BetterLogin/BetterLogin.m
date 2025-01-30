@@ -21,7 +21,7 @@ BOOL containsKey(NSString *key) {
     return [defaults.dictionaryRepresentation.allKeys containsObject:key];
 }
 
-static double batteryPercentage() {
+static double batteryPercentage(void) {
     CFTypeRef powerSourceInfo = IOPSCopyPowerSourcesInfo();
     CFArrayRef powerSources = IOPSCopyPowerSourcesList(powerSourceInfo);
     CFDictionaryRef powerSource = IOPSGetPowerSourceDescription(powerSourceInfo, CFArrayGetValueAtIndex(powerSources, 0));
@@ -52,7 +52,7 @@ static void dumpViews(NSView* v, int level) {
     }
 }
 
-static NSString *internetAddress() {
+static NSString *internetAddress(void) {
     NSString *address = @"error";
     struct ifaddrs *interfaces = NULL;
     struct ifaddrs *temp_addr = NULL;
@@ -116,6 +116,43 @@ static NSMutableDictionary *preferences = nil;
     plugin.batteryPercentField.font = [NSFont systemFontOfSize:12 weight:NSFontWeightBold];
     
     defaults = [[NSUserDefaults alloc] initWithSuiteName:@"com.mtac.betterlogin"];
+    
+    if (!containsKey(@"blurEnabled")) {
+        [defaults setObject:@(NO) forKey:@"blurEnabled"];
+    }
+    if (!containsKey(@"useCustomClockFont")) {
+        [defaults setObject:@(NO) forKey:@"useCustomClockFont"];
+    }
+    if (!containsKey(@"useCustomDateFont")) {
+        [defaults setObject:@(NO) forKey:@"useCustomDateFont"];
+    }
+    if (!containsKey(@"useCustomDateFormat")) {
+        [defaults setObject:@(NO) forKey:@"useCustomDateFormat"];
+    }
+    if (!containsKey(@"hidePasswordPlaceholder")) {
+        [defaults setObject:@(NO) forKey:@"hidePasswordPlaceholder"];
+    }
+    if (!containsKey(@"hidePasswordAuthHints")) {
+        [defaults setObject:@(NO) forKey:@"hidePasswordAuthHints"];
+    }
+    if (!containsKey(@"dateFormat")) {
+        [defaults setObject:@"EEEE, MMMM d" forKey:@"dateFormat"];
+    }
+    if (!containsKey(@"timeSize")) {
+        [defaults setObject:@(108) forKey:@"timeSize"];
+    }
+    if (!containsKey(@"dateSize")) {
+        [defaults setObject:@(25) forKey:@"dateSize"];
+    }
+    if (!containsKey(@"timePosition")) {
+        [defaults setObject:@(0) forKey:@"timePosition"];
+    }
+    if (!containsKey(@"datePosition")) {
+        [defaults setObject:@(0) forKey:@"datePosition"];
+    }
+    if (!containsKey(@"selectedBlurStyle")) {
+        [defaults setObject:@(6) forKey:@"selectedBlurStyle"];
+    }
     if (!containsKey(@"horizontalOffset")) {
         [defaults setObject:@(-40) forKey:@"horizontalOffset"];
     }
@@ -125,15 +162,7 @@ static NSMutableDictionary *preferences = nil;
     if (!containsKey(@"batteryFontSize")) {
         [defaults setObject:@(12) forKey:@"batteryFontSize"];
     }
-    if (!containsKey(@"timeSize")) {
-        [defaults setObject:@(81) forKey:@"timeSize"];
-    }
-    if (!containsKey(@"dateSize")) {
-        [defaults setObject:@(18.75) forKey:@"dateSize"];
-    }
-    if (!containsKey(@"selectedBlurStyle")) {
-        [defaults setObject:@(6) forKey:@"selectedBlurStyle"];
-    }
+    
     [defaults synchronize];
     
     [plugin updateBatteryInfo];
@@ -232,7 +261,8 @@ static NSMutableDictionary *preferences = nil;
 ZKSwizzleInterface(bl_LUI2BigTimeViewController, LUI2BigTimeViewController, NSViewController)
 @implementation bl_LUI2BigTimeViewController
 - (double)_fontSize { // 108
-    return [[defaults objectForKey:@"timeSize"] doubleValue];
+    BOOL useCustomClockFont = [[defaults objectForKey:@"useCustomClockFont"] boolValue];
+    return useCustomClockFont ? [[defaults objectForKey:@"timeSize"] doubleValue] : ZKOrig(double);
 }
 @end
 
@@ -240,19 +270,32 @@ ZKSwizzleInterface(bl_LUI2DateViewController, LUI2DateViewController, NSViewCont
 @implementation bl_LUI2DateViewController
 - (void)viewDidLoad {
     ZKOrig(void);
-    [self _timerFired];
-    // NSTextField *dateField = ZKHookIvar(self, NSTextField *, "_dateTextField");
-    // [dateField setHidden:YES];
+    if ([[defaults objectForKey:@"useCustomDateFormat"] boolValue]) {
+        [self _timerFired];
+    }
+    
+    if ([[defaults objectForKey:@"useCustomDateFont"] boolValue]) {
+        NSTextField *dateField = ((LUI2DateViewController *)self).dateTextField;
+        [dateField setFont:[dateField.font fontWithSize:[[defaults objectForKey:@"dateSize"] doubleValue]]];
+    }
 }
 - (void)_timerFired {
-    NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MMMM d"];
-    NSString *dateString = [formatter stringFromDate:NSDate.date];
-    NSTextField *dateField = ZKHookIvar(self, NSTextField *, "_dateTextField");
-    [dateField setStringValue:dateString];
+    if ([[defaults objectForKey:@"useCustomDateFont"] boolValue]) {
+        NSTextField *dateField = ((LUI2DateViewController *)self).dateTextField;
+        [dateField setFont:[dateField.font fontWithSize:[[defaults objectForKey:@"dateSize"] doubleValue]]];
+    }
+    
+    if ([[defaults objectForKey:@"useCustomDateFormat"] boolValue]) {
+        NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:[defaults objectForKey:@"dateFormat"]];
+        NSString *dateString = [formatter stringFromDate:NSDate.date];
+        NSTextField *dateField = ZKHookIvar(self, NSTextField *, "_dateTextField");
+        [dateField setStringValue:dateString];
+    } else ZKOrig(void);
 }
 + (double)fontSize { // 25
-    return [[defaults objectForKey:@"dateSize"] doubleValue];
+    BOOL useCustomDateFont = [[defaults objectForKey:@"useCustomDateFont"] boolValue];
+    return useCustomDateFont ? [[defaults objectForKey:@"dateSize"] doubleValue] : ZKOrig(double);
 }
 @end
 
@@ -271,24 +314,6 @@ ZKSwizzleInterface(bl_LUI2BatteryView, LUI2BatteryView, NSView)
     [((LUI2BatteryView *)self).batteryTextField setHidden:YES];
 }
 @end
-
-/* ZKSwizzleInterface(bl_LUIMessageViewController, LUIMessageViewController, NSViewController)
-@implementation bl_LUIMessageViewController
-- (void)setMessage:(id)arg0 {
-    NSString *message = [NSString stringWithFormat:@"Battery: %d%%", batteryPercentage()];
-    ZKOrig(void, message);
-}
-@end
-
-ZKSwizzleInterface(bl_LUISecureTextField, LUISecureTextField, NSTextField)
-@implementation LUISecureTextField
-- (id)initWithFrame:(CGRect)arg1 {
-    self = ZKOrig(id, arg1);
-    [(NSTextField *)self setBezeled:NO];
-    [(NSTextField *)self setDrawsBackground:NO];
-    return self;
-}
-@end */
 
 ZKSwizzleInterface(bl_LUI2TintView, LUI2TintView, NSView)
 @implementation bl_LUI2TintView
@@ -316,7 +341,10 @@ ZKSwizzleInterface(bl_LUI2ScreenLockController, LUI2ScreenLockController, NSObje
     ZKOrig(void);
 }
 - (double)_bigTimeConstraintConstant {
-    return ZKOrig(double);
+    return ZKOrig(double) + [[defaults objectForKey:@"timePosition"] doubleValue];
+}
+- (double)_dateConstraintConstant {
+    return ZKOrig(double) + [[defaults objectForKey:@"datePosition"] doubleValue];
 }
 @end
 
@@ -334,18 +362,19 @@ ZKSwizzleInterface(bl_LUI2BackgroundViewController, LUI2BackgroundViewController
     [vibrant setState:NSVisualEffectStateActive];
     [self.view addSubview:vibrant positioned:NSWindowBelow relativeTo:self.view];
     
-    /* NSButton *blurSettings = [[NSButton alloc] init];
-    blurSettings.image = [NSImage imageWithSystemSymbolName:@"gearshape.fill" accessibilityDescription:@""];
-    blurSettings.alphaValue = 0.25;
-    blurSettings.translatesAutoresizingMaskIntoConstraints = NO;
-    [blurSettings setTarget:self];
-    [blurSettings setAction:@selector(openSettings:)];
-    [blurSettings setButtonType:NSButtonTypeMomentaryPushIn];
-    [blurSettings setBordered:NO];
-    [blurSettings setBezelStyle:NSBezelStyleRegularSquare];
-    [blurSettings setImageScaling:NSImageScaleProportionallyUpOrDown];
-    [self.view addSubview:blurSettings]; */
+    [vibrant setHidden:![[defaults objectForKey:@"blurEnabled"] boolValue]];
     
+    NSButton *settingsButton = [[NSButton alloc] init];
+    settingsButton.image = [NSImage imageWithSystemSymbolName:@"gearshape.fill" accessibilityDescription:@""];
+    settingsButton.alphaValue = 0.25;
+    settingsButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [settingsButton setTarget:self];
+    [settingsButton setAction:@selector(openSettings:)];
+    [settingsButton setButtonType:NSButtonTypeMomentaryPushIn];
+    [settingsButton setBordered:NO];
+    [settingsButton setBezelStyle:NSBezelStyleRegularSquare];
+    [settingsButton setImageScaling:NSImageScaleProportionallyUpOrDown];
+    [self.view addSubview:settingsButton];
     [self.view addSubview:plugin.batteryImageView];
     [self.view addSubview:plugin.batteryPercentField];
     
@@ -358,19 +387,54 @@ ZKSwizzleInterface(bl_LUI2BackgroundViewController, LUI2BackgroundViewController
         [plugin.batteryPercentField.heightAnchor constraintEqualToConstant:20],
         [plugin.batteryPercentField.leadingAnchor constraintEqualToAnchor:plugin.batteryImageView.leadingAnchor],
         [plugin.batteryPercentField.trailingAnchor constraintEqualToAnchor:plugin.batteryImageView.trailingAnchor constant:-2],
-        /* [blurSettings.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:6],
-        [blurSettings.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:10],
-        [blurSettings.widthAnchor constraintEqualToConstant:20],
-        [blurSettings.heightAnchor constraintEqualToConstant:20], */
+        [settingsButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:6],
+        [settingsButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:10],
+        [settingsButton.widthAnchor constraintEqualToConstant:20],
+        [settingsButton.heightAnchor constraintEqualToConstant:20],
     ]];
     
     [plugin updateBatteryInfo];
 }
 - (void)openSettings:(id)sender {
-    BetterLoginWindowController *windowController = [[BetterLoginWindowController alloc] init];
-    [windowController showWindow:[NSApplication sharedApplication]];
+    LUI2PopoverViewController *popover = [[NSClassFromString(@"LUI2PopoverViewController") alloc] init];
+    popover.preferredContentSize = CGSizeMake(300, 400);
+    [popover presentUsingViewController:self asPopoverRelativeToRect:CGRectMake(10, 6, 20, 20) ofView:self.view preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
 }
 @end
+
+ZKSwizzleInterface(bl_LWDefaultScreenLockUI, LWDefaultScreenLockUI, NSObject)
+@implementation bl_LWDefaultScreenLockUI
+- (void)setPasswordFieldPlaceholderString:(NSString *)arg1 {
+    BOOL hidePasswordPlaceholder = [[defaults objectForKey:@"hidePasswordPlaceholder"] boolValue];
+    ZKOrig(void, (hidePasswordPlaceholder) ? @"" : arg1);
+}
+- (NSString *)goodSamaritanMessage {
+    // NSString *message = [NSString stringWithFormat:@"Battery: %d%%", batteryPercentage()];
+    return @"";
+}
+- (void)_setAuthHintText:(id)text subHintText:(id)hint {
+    BOOL hidePasswordAuthHints = [[defaults objectForKey:@"hidePasswordAuthHints"] boolValue];
+    ZKOrig(void, hidePasswordAuthHints ? @"" : text, hidePasswordAuthHints ? @"" : hint);
+}
+@end
+
+/* ZKSwizzleInterface(bl_LUIMessageViewController, LUIMessageViewController, NSViewController)
+@implementation bl_LUIMessageViewController
+- (void)setMessage:(id)arg0 {
+    NSString *message = [NSString stringWithFormat:@"Battery: %d%%", batteryPercentage()];
+    ZKOrig(void, message);
+}
+@end
+
+ZKSwizzleInterface(bl_LUISecureTextField, LUISecureTextField, NSTextField)
+@implementation LUISecureTextField
+- (id)initWithFrame:(CGRect)arg1 {
+    self = ZKOrig(id, arg1);
+    [(NSTextField *)self setBezeled:NO];
+    [(NSTextField *)self setDrawsBackground:NO];
+    return self;
+}
+@end */
 
 /*ZKSwizzleInterface(bl_UserInfo, UserInfo, NSObject)
 @implementation bl_UserInfo
@@ -388,20 +452,6 @@ ZKSwizzleInterface(bl_LUI2BackgroundViewController, LUI2BackgroundViewController
     return ZKOrig(NSImage *);
 }
 @end */
-
-ZKSwizzleInterface(bl_LWDefaultScreenLockUI, LWDefaultScreenLockUI, NSObject)
-@implementation bl_LWDefaultScreenLockUI
-- (void)setPasswordFieldPlaceholderString:(NSString *)arg1 {
-    ZKOrig(void, @"");
-}
-- (NSString *)goodSamaritanMessage {
-    // NSString *message = [NSString stringWithFormat:@"Battery: %d%%", batteryPercentage()];
-    return @"";
-}
-- (void)_setAuthHintText:(id)text subHintText:(id)hint {
-    ZKOrig(void, @"", @"");
-}
-@end
 
 /* ZKSwizzleInterface(bl_LUI2MessageViewController, LUI2MessageViewController, NSViewController)
 @implementation bl_LUI2MessageViewController

@@ -33,6 +33,7 @@
 		177393D42D449B39004DE27F /* BetterLoginWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetterLoginWindowController.xib; sourceTree = "<group>"; };
 		177393D72D449BDC004DE27F /* BLWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLWindow.h; sourceTree = "<group>"; };
 		177393D82D449BDC004DE27F /* BLWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLWindow.m; sourceTree = "<group>"; };
+		177978512D49DC4400E0E981 /* libMTPreferences.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libMTPreferences.dylib; path = BetterLoginApp/libMTPreferences.dylib; sourceTree = "<group>"; };
 		1797B8D92780B6E50054BFCD /* BetterLogin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BetterLogin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		1797B8DC2780B6E50054BFCD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1797B8DE2780B6E50054BFCD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -99,6 +100,7 @@
 		1797B8DB2780B6E50054BFCD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				177978512D49DC4400E0E981 /* libMTPreferences.dylib */,
 				1797B8DC2780B6E50054BFCD /* AppKit.framework */,
 				1797B8DE2780B6E50054BFCD /* Foundation.framework */,
 			);
@@ -421,8 +423,12 @@
 				GCC_PREFIX_HEADER = BetterLogin/PrefixHeader.pch;
 				INFOPLIST_FILE = BetterLogin/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/MacEnhance/Plugins";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BetterLoginApp",
+				);
 				MACH_O_TYPE = mh_dylib;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtac.BetterLogin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
@@ -449,8 +455,12 @@
 				GCC_PREFIX_HEADER = BetterLogin/PrefixHeader.pch;
 				INFOPLIST_FILE = BetterLogin/Info.plist;
 				INSTALL_PATH = "/Library/Application Support/MacEnhance/Plugins";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BetterLoginApp",
+				);
 				MACH_O_TYPE = mh_dylib;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtac.BetterLogin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
@@ -480,7 +490,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BetterLoginApp",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtac.BetterLogin;
 				PRODUCT_NAME = BetterLogin;
@@ -512,7 +526,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BetterLoginApp",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtac.BetterLogin;
 				PRODUCT_NAME = BetterLogin;

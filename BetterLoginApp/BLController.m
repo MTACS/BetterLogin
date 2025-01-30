@@ -9,86 +9,217 @@
 
 NSUserDefaults *defaults;
 
+BOOL containsKey(NSString *key) {
+    return [defaults.dictionaryRepresentation.allKeys containsObject:key];
+}
+
 @implementation BLController
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadPreferences];
+    [self loadDefaults];
 }
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
 }
-- (void)loadPreferences {
+- (void)loadDefaults {
     if (!defaults) defaults = [[NSUserDefaults alloc] initWithSuiteName:@"com.mtac.betterlogin"];
-    self.enableSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"enabled"] boolValue] ?: YES;
-    self.blurSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"blurEnabled"] boolValue] ?: NO;
-    self.internetSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"internetEnabled"] boolValue] ?: NO;
-    self.percentageSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"percentageEnabled"] boolValue] ?: NO;
-    self.colorsSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"colorsEnabled"] boolValue] ?: NO;
-    self.nameSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"nameEnabled"] boolValue] ?: NO;
-    self.pictureSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"pictureEnabled"] boolValue] ?: NO;
-    self.placeholderSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"placeholderEnabled"] boolValue] ?: NO;
-    self.hintSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"hintsEnabled"] boolValue] ?: NO;
-    self.cancelButtonSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"cancelTitleEnabled"] boolValue] ?: NO;
     
-    self.nameLabel.enabled = [[defaults objectForKey:@"nameEnabled"] boolValue];
-    self.nameLabel.delegate = self;
-    NSString *accountName = [defaults objectForKey:@"accountName"];
-    if (accountName != nil || ![accountName isEqualToString:@""]) {
-        self.nameLabel.stringValue = accountName ?: @"";
+    if (!containsKey(@"blurEnabled")) {
+        [defaults setObject:@(NO) forKey:@"blurEnabled"];
     }
-}
-- (IBAction)enableChanged:(NSSwitch *)sender {
-    [defaults setObject:[NSNumber numberWithBool:sender.state] forKey:@"enabled"];
-    [defaults synchronize];
-}
-- (IBAction)blurChanged:(NSSwitch *)sender {
-    [defaults setObject:[NSNumber numberWithBool:sender.state] forKey:@"blurEnabled"];
-    [defaults synchronize];
-}
-- (IBAction)internetChanged:(NSSwitch *)sender {
-    [defaults setObject:[NSNumber numberWithBool:sender.state] forKey:@"internetEnabled"];
-    [defaults synchronize];
-}
-- (IBAction)percentageChanged:(NSSwitch *)sender {
-    [defaults setObject:[NSNumber numberWithBool:sender.state] forKey:@"percentageEnabled"];
-    [defaults synchronize];
-}
-- (IBAction)colorsChanged:(NSSwitch *)sender {
-    [defaults setObject:[NSNumber numberWithBool:sender.state] forKey:@"colorsEnabled"];
-    [defaults synchronize];
-}
-- (IBAction)pictureChanged:(NSSwitch *)sender {
-    [defaults setObject:[NSNumber numberWithBool:sender.state] forKey:@"pictureEnabled"];
-    [defaults synchronize];
-}
-- (IBAction)placeholderChanged:(NSSwitch *)sender {
-    [defaults setObject:[NSNumber numberWithBool:sender.state] forKey:@"placeholderEnabled"];
-    [defaults synchronize];
-}
-- (IBAction)nameChanged:(NSSwitch *)sender {
-    [defaults setObject:[NSNumber numberWithBool:sender.state] forKey:@"nameEnabled"];
-    [defaults synchronize];
-    self.nameLabel.enabled = [[defaults objectForKey:@"nameEnabled"] boolValue];
-}
-- (IBAction)hintsChanged:(NSSwitch *)sender {
-    [defaults setObject:[NSNumber numberWithBool:sender.state] forKey:@"hintsEnabled"];
-    [defaults synchronize];
-}
-- (IBAction)cancelTitleChanged:(NSSwitch *)sender {
-    [defaults setObject:[NSNumber numberWithBool:sender.state] forKey:@"cancelTitleEnabled"];
-    [defaults synchronize];
-}
-- (IBAction)apply:(id)sender {
-    NSTask *lockTask = [[NSTask alloc] init];
-    [lockTask setLaunchPath:@"/usr/bin/pmset"];
-    [lockTask setArguments:@[@"sleepnow"]];
-    [lockTask launch];
-}
-- (void)controlTextDidChange:(NSNotification *)notification {
-    NSTextField *textField = [notification object];
-    if (textField.stringValue != nil || ![textField.stringValue isEqualToString:@""]) {
-        [defaults setObject:textField.stringValue forKey:@"accountName"];
-        [defaults synchronize];
+    
+    if (!containsKey(@"useCustomClockFont")) {
+        [defaults setObject:@(NO) forKey:@"useCustomClockFont"];
     }
+    
+    if (!containsKey(@"useCustomDateFont")) {
+        [defaults setObject:@(NO) forKey:@"useCustomDateFont"];
+    }
+    
+    if (!containsKey(@"useCustomDateFormat")) {
+        [defaults setObject:@(NO) forKey:@"useCustomDateFormat"];
+    }
+    
+    if (!containsKey(@"hidePasswordPlaceholder")) {
+        [defaults setObject:@(NO) forKey:@"hidePasswordPlaceholder"];
+    }
+    
+    if (!containsKey(@"hidePasswordAuthHints")) {
+        [defaults setObject:@(NO) forKey:@"hidePasswordAuthHints"];
+    }
+    
+    if (!containsKey(@"dateFormat")) {
+        [defaults setObject:@"EEEE, MMMM d" forKey:@"dateFormat"];
+    }
+    
+    if (!containsKey(@"timeSize")) {
+        [defaults setObject:@(108) forKey:@"timeSize"];
+    }
+    
+    if (!containsKey(@"dateSize")) {
+        [defaults setObject:@(25) forKey:@"dateSize"];
+    }
+    
+    if (!containsKey(@"timePosition")) {
+        [defaults setObject:@(0) forKey:@"timePosition"];
+    }
+    
+    if (!containsKey(@"datePosition")) {
+        [defaults setObject:@(0) forKey:@"datePosition"];
+    }
+    
+    if (!containsKey(@"selectedBlurStyle")) {
+        [defaults setObject:@(6) forKey:@"selectedBlurStyle"];
+    }
+    
+    [defaults synchronize];
+    [self loadPreferences];
+}
+- (void)loadPreferences {
+    self.blurSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"blurEnabled"] boolValue] ?: NO;
+    self.clockFontSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"useCustomClockFont"] boolValue] ?: NO;
+    self.dateFontSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"useCustomDateFont"] boolValue] ?: NO;
+    self.dateFormatSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"useCustomDateFormat"] boolValue] ?: NO;
+    self.placeholderSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"hidePasswordPlaceholder"] boolValue] ?: NO;
+    self.authHintSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"hidePasswordAuthHints"] boolValue] ?: NO;
+    
+    NSString *dateFormat = [defaults objectForKey:@"dateFormat"];
+    self.dateFormatInput.stringValue = ([dateFormat isEqualToString:@"EEEE, MMMM d"]) ? @"" : dateFormat;
+    
+    NSNumber *timeSize = [defaults objectForKey:@"timeSize"];
+    self.clockSizeInput.stringValue = ([timeSize integerValue] == 108) ? @"" : [NSString stringWithFormat:@"%ld", [timeSize integerValue]];
+    [self.clockSizeStepper setIntegerValue:[timeSize integerValue]];
+    
+    NSNumber *dateSize = [defaults objectForKey:@"dateSize"];
+    self.dateSizeInput.stringValue = ([dateSize integerValue] == 25) ? @"" : [NSString stringWithFormat:@"%ld", [dateSize integerValue]];
+    [self.dateSizeStepper setIntegerValue:[dateSize integerValue]];
+    
+    NSNumber *timePosition = [defaults objectForKey:@"timePosition"];
+    self.clockPositionInput.stringValue = ([timePosition integerValue] == 0) ? @"" : [NSString stringWithFormat:@"%ld", [timePosition integerValue]];
+    [self.clockPositionStepper setIntegerValue:[timePosition integerValue]];
+    
+    NSNumber *datePosition = [defaults objectForKey:@"datePosition"];
+    self.datePositionInput.stringValue = ([datePosition integerValue] == 0) ? @"" : [NSString stringWithFormat:@"%ld", [datePosition integerValue]];
+    [self.datePositionStepper setIntegerValue:[datePosition integerValue]];
+    
+    NSNumber *selectedBlurStyle = [defaults objectForKey:@"selectedBlurStyle"];
+    
+    NSMenuItem *selectedBlurItem;
+    for (NSMenuItem *item in self.blurStyleButton.itemArray) {
+        BOOL selected = (item.tag == [selectedBlurStyle integerValue]);
+        item.state = selected ? NSControlStateValueOn : NSControlStateValueOff;
+        if (selected) {
+            selectedBlurItem = item;
+        }
+    }
+    [self.blurStyleButton selectItem:selectedBlurItem];
+    
+    // [self.blurStyleButton selectItem:[self.blurStyleButton.itemArray objectAtIndex:[[self blurStyles] indexOfObject:selectedBlurStyle]]];
+}
+- (BOOL)checkNumber:(NSString *)input {
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    NSNumber *checkNumber = [numberFormatter numberFromString:input];
+    return checkNumber != nil;
+}
+- (IBAction)blurStyleChanged:(NSPopUpButton *)sender {
+    NSMenuItem *selectedItem = sender.selectedItem;
+    [defaults setObject:@(selectedItem.tag) forKey:@"selectedBlurStyle"];
+    [defaults synchronize];
+}
+- (IBAction)stepperChanged:(NSStepper *)sender {
+    if ([sender isEqual:self.clockSizeStepper]) {
+        NSInteger timeSizeValue = sender.integerValue;
+        [defaults setObject:@(timeSizeValue) forKey:@"timeSize"];
+        self.clockSizeInput.stringValue = [NSString stringWithFormat:@"%ld", timeSizeValue];
+    } else if ([sender isEqual:self.clockPositionStepper]) {
+        NSInteger clockPositionValue = sender.integerValue;
+        [defaults setObject:@(clockPositionValue) forKey:@"timePosition"];
+        self.clockPositionInput.stringValue = [NSString stringWithFormat:@"%ld", clockPositionValue];
+    } else if ([sender isEqual:self.dateSizeStepper]) {
+        NSInteger dateSizeValue = sender.integerValue;
+        [defaults setObject:@(dateSizeValue) forKey:@"dateSize"];
+        self.dateSizeInput.stringValue = [NSString stringWithFormat:@"%ld", dateSizeValue];
+    } else if ([sender isEqual:self.datePositionStepper]) {
+        NSInteger datePositionValue = sender.integerValue;
+        [defaults setObject:@(datePositionValue) forKey:@"datePosition"];
+        self.datePositionInput.stringValue = [NSString stringWithFormat:@"%ld", datePositionValue];
+    }
+    [defaults synchronize];
+}
+- (IBAction)authHintsSwitchChanged:(NSSwitch *)sender {
+    [defaults setObject:@(sender.state) forKey:@"hidePasswordAuthHints"];
+    [defaults synchronize];
+}
+- (IBAction)placeholderSwitchChanged:(NSSwitch *)sender {
+    [defaults setObject:@(sender.state) forKey:@"hidePasswordPlaceholder"];
+    [defaults synchronize];
+}
+- (IBAction)dateFormatSwitchChanged:(NSSwitch *)sender {
+    [defaults setObject:@(sender.state) forKey:@"useCustomDateFormat"];
+    [defaults synchronize];
+}
+- (IBAction)dateFontSwitchChanged:(NSSwitch *)sender {
+    [defaults setObject:@(sender.state) forKey:@"useCustomDateFont"];
+    [defaults synchronize];
+}
+- (IBAction)clockFontSwitchChanged:(NSSwitch *)sender {
+    [defaults setObject:@(sender.state) forKey:@"useCustomClockFont"];
+    [defaults synchronize];
+}
+- (IBAction)blurSwitchChanged:(NSSwitch *)sender {
+    [defaults setObject:@(sender.state) forKey:@"blurEnabled"];
+    [defaults synchronize];
+}
+- (IBAction)timeSizeChanged:(NSTextField *)sender {
+    NSString *clockSizeInput = sender.stringValue;
+    if (sender.stringValue.length == 0) {
+        [defaults setObject:[NSNumber numberWithInteger:108] forKey:@"timeSize"];
+    } else {
+        if ([self checkNumber:clockSizeInput]) {
+            [defaults setObject:[NSNumber numberWithDouble:[clockSizeInput doubleValue]] forKey:@"timeSize"];
+        }
+    }
+    [defaults synchronize];
+}
+- (IBAction)timePositionChanged:(NSTextField *)sender {
+    NSString *clockPositionInput = sender.stringValue;
+    if (sender.stringValue.length == 0) {
+        [defaults setObject:[NSNumber numberWithInteger:0] forKey:@"timePosition"];
+    } else {
+        if ([self checkNumber:clockPositionInput]) {
+            [defaults setObject:[NSNumber numberWithInteger:[clockPositionInput integerValue]] forKey:@"timePosition"];
+        }
+    }
+    [defaults synchronize];
+}
+- (IBAction)dateSizeChanged:(NSTextField *)sender {
+    NSString *dateSizeInput = sender.stringValue;
+    if (sender.stringValue.length == 0) {
+        [defaults setObject:[NSNumber numberWithInteger:25] forKey:@"dateSize"];
+    } else {
+        if ([self checkNumber:dateSizeInput]) {
+            [defaults setObject:[NSNumber numberWithDouble:[dateSizeInput doubleValue]] forKey:@"dateSize"];
+        }
+    }
+    [defaults synchronize];
+}
+- (IBAction)datePositionChanged:(NSTextField *)sender {
+    NSString *datePositionInput = sender.stringValue;
+    if (sender.stringValue.length == 0) {
+        [defaults setObject:[NSNumber numberWithInteger:0] forKey:@"datePosition"];
+    } else {
+        if ([self checkNumber:datePositionInput]) {
+            [defaults setObject:[NSNumber numberWithInteger:[datePositionInput integerValue]] forKey:@"datePosition"];
+        }
+    }
+    [defaults synchronize];
+}
+- (IBAction)dateFormatChanged:(NSTextField *)sender {
+    if (sender.stringValue.length == 0) {
+        [defaults setObject:@"EEEE, MMMM d" forKey:@"dateFormat"];
+    } else {
+        [defaults setObject:sender.stringValue forKey:@"dateFormat"];
+    }
+    [defaults synchronize];
 }
 @end
