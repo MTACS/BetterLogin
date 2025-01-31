@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="Image references" minToolsVersion="12.0"/>
-        <capability name="NSView safe area layout guides" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -212,40 +211,10 @@
             </objects>
             <point key="canvasLocation" x="541" y="381"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="FPD-sb-Ekn">
-            <objects>
-                <viewController id="mWi-NH-ROy" sceneMemberID="viewController">
-                    <view key="view" id="O9d-dg-zY0">
-                        <rect key="frame" x="0.0" y="0.0" width="149" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <viewLayoutGuide key="safeArea" id="NgX-cy-mZB"/>
-                        <viewLayoutGuide key="layoutMargins" id="WAD-wL-k8N"/>
-                    </view>
-                </viewController>
-                <customObject id="A86-Kd-dEM" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2119" y="520"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="HQA-3Q-LU7">
-            <objects>
-                <viewController id="b3f-n9-e7s" sceneMemberID="viewController">
-                    <view key="view" id="Js2-YJ-gyv">
-                        <rect key="frame" x="0.0" y="0.0" width="302" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <viewLayoutGuide key="safeArea" id="mJb-uv-hZv"/>
-                        <viewLayoutGuide key="layoutMargins" id="KBs-dP-OkK"/>
-                    </view>
-                </viewController>
-                <customObject id="E6b-fq-uCh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2195" y="892"/>
-        </scene>
         <!--Controller-->
         <scene sceneID="Pmq-zq-0CO">
             <objects>
-                <viewController id="bqA-WL-WNO" customClass="BLController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="settingsController" id="bqA-WL-WNO" customClass="BLController" sceneMemberID="viewController">
                     <view key="view" id="skn-zV-7d4">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="670"/>
                         <autoresizingMask key="autoresizingMask"/>

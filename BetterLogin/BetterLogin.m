@@ -364,7 +364,7 @@ ZKSwizzleInterface(bl_LUI2BackgroundViewController, LUI2BackgroundViewController
     
     [vibrant setHidden:![[defaults objectForKey:@"blurEnabled"] boolValue]];
     
-    NSButton *settingsButton = [[NSButton alloc] init];
+    /* NSButton *settingsButton = [[NSButton alloc] init];
     settingsButton.image = [NSImage imageWithSystemSymbolName:@"gearshape.fill" accessibilityDescription:@""];
     settingsButton.alphaValue = 0.25;
     settingsButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -374,7 +374,8 @@ ZKSwizzleInterface(bl_LUI2BackgroundViewController, LUI2BackgroundViewController
     [settingsButton setBordered:NO];
     [settingsButton setBezelStyle:NSBezelStyleRegularSquare];
     [settingsButton setImageScaling:NSImageScaleProportionallyUpOrDown];
-    [self.view addSubview:settingsButton];
+    [self.view addSubview:settingsButton]; */
+     
     [self.view addSubview:plugin.batteryImageView];
     [self.view addSubview:plugin.batteryPercentField];
     
@@ -387,18 +388,31 @@ ZKSwizzleInterface(bl_LUI2BackgroundViewController, LUI2BackgroundViewController
         [plugin.batteryPercentField.heightAnchor constraintEqualToConstant:20],
         [plugin.batteryPercentField.leadingAnchor constraintEqualToAnchor:plugin.batteryImageView.leadingAnchor],
         [plugin.batteryPercentField.trailingAnchor constraintEqualToAnchor:plugin.batteryImageView.trailingAnchor constant:-2],
-        [settingsButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:6],
+        /* [settingsButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:6],
         [settingsButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:10],
         [settingsButton.widthAnchor constraintEqualToConstant:20],
-        [settingsButton.heightAnchor constraintEqualToConstant:20],
+        [settingsButton.heightAnchor constraintEqualToConstant:20], */
     ]];
     
     [plugin updateBatteryInfo];
 }
-- (void)openSettings:(id)sender {
+- (void)openSettings:(NSButton *)sender {
+    NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
+    NSURL *settingsAppPath = [workspace URLForApplicationWithBundleIdentifier:@"com.mtac.betterlogin"];
+    [workspace openApplicationAtURL:settingsAppPath configuration:[NSWorkspaceOpenConfiguration configuration] completionHandler:nil];
+    
+    /* NSBundle *settingsBundle = [NSBundle bundleWithPath:@"/Applications/BetterLogin.app"];
+    [settingsBundle load];
+    NSStoryboard *storyBoard = [NSStoryboard storyboardWithName:@"Main" bundle:settingsBundle];
+    BLController *controller = [storyBoard instantiateControllerWithIdentifier:@"settingsController"];
+    
     LUI2PopoverViewController *popover = [[NSClassFromString(@"LUI2PopoverViewController") alloc] init];
-    popover.preferredContentSize = CGSizeMake(300, 400);
-    [popover presentUsingViewController:self asPopoverRelativeToRect:CGRectMake(10, 6, 20, 20) ofView:self.view preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
+    
+    [popover addChildViewController:controller];
+    [popover.view addSubview:controller.view];
+    
+    popover.preferredContentSize = CGSizeMake(450, 620);
+    [popover presentUsingViewController:self asPopoverRelativeToRect:CGRectMake(0, 0, 20, 20) ofView:sender preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient]; */
 }
 @end
 

@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "ZKSwizzle/ZKSwizzle.h"
-#import "BetterLoginWindowController.h"
 #import "BLPowerCondition.h"
+#import "../BetterLoginApp/BLWindowController.h"
 #include <dlfcn.h>
 
 #define osx_ver_max [[NSProcessInfo processInfo] operatingSystemVersion].majorVersion
@@ -88,4 +88,9 @@ NSVisualEffectMaterialUnderPageBackground = 22,
 
 @interface LUI2PopoverViewController : LUI2ViewController
 - (void)presentUsingViewController:(id)controller asPopoverRelativeToRect:(CGRect)rect ofView:(id)view preferredEdge:(unsigned long long)edge behavior:(long long)behavior;
+@end
+
+@interface BLController : NSViewController
+- (void)loadDefaults;
+- (void)loadPreferences;
 @end

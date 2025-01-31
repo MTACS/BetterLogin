@@ -24,5 +24,7 @@
 @property (strong) IBOutlet NSStepper *clockPositionStepper;
 @property (strong) IBOutlet NSStepper *dateSizeStepper;
 @property (strong) IBOutlet NSStepper *datePositionStepper;
+- (void)loadDefaults;
+- (void)loadPreferences;
 @end
 

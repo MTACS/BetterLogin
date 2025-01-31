@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1744C52C2D45E10800878C4A /* BLPowerCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1744C52B2D45E10800878C4A /* BLPowerCondition.m */; };
-		177393D52D449B39004DE27F /* BetterLoginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 177393D32D449B39004DE27F /* BetterLoginWindowController.m */; };
-		177393D62D449B39004DE27F /* BetterLoginWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 177393D42D449B39004DE27F /* BetterLoginWindowController.xib */; };
-		177393D92D449BDC004DE27F /* BLWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 177393D82D449BDC004DE27F /* BLWindow.m */; };
 		1797B8DD2780B6E50054BFCD /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1797B8DC2780B6E50054BFCD /* AppKit.framework */; };
 		1797B8DF2780B6E50054BFCD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1797B8DE2780B6E50054BFCD /* Foundation.framework */; };
 		1797B8E62780B6E50054BFCD /* BetterLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1797B8E52780B6E50054BFCD /* BetterLogin.m */; };
@@ -28,11 +25,6 @@
 /* Begin PBXFileReference section */
 		1744C52A2D45E10800878C4A /* BLPowerCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLPowerCondition.h; sourceTree = "<group>"; };
 		1744C52B2D45E10800878C4A /* BLPowerCondition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLPowerCondition.m; sourceTree = "<group>"; };
-		177393D22D449B39004DE27F /* BetterLoginWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BetterLoginWindowController.h; sourceTree = "<group>"; };
-		177393D32D449B39004DE27F /* BetterLoginWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BetterLoginWindowController.m; sourceTree = "<group>"; };
-		177393D42D449B39004DE27F /* BetterLoginWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BetterLoginWindowController.xib; sourceTree = "<group>"; };
-		177393D72D449BDC004DE27F /* BLWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLWindow.h; sourceTree = "<group>"; };
-		177393D82D449BDC004DE27F /* BLWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLWindow.m; sourceTree = "<group>"; };
 		177978512D49DC4400E0E981 /* libMTPreferences.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libMTPreferences.dylib; path = BetterLoginApp/libMTPreferences.dylib; sourceTree = "<group>"; };
 		1797B8D92780B6E50054BFCD /* BetterLogin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BetterLogin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		1797B8DC2780B6E50054BFCD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -115,11 +107,6 @@
 				1797B8E52780B6E50054BFCD /* BetterLogin.m */,
 				1744C52A2D45E10800878C4A /* BLPowerCondition.h */,
 				1744C52B2D45E10800878C4A /* BLPowerCondition.m */,
-				177393D72D449BDC004DE27F /* BLWindow.h */,
-				177393D82D449BDC004DE27F /* BLWindow.m */,
-				177393D22D449B39004DE27F /* BetterLoginWindowController.h */,
-				177393D32D449B39004DE27F /* BetterLoginWindowController.m */,
-				177393D42D449B39004DE27F /* BetterLoginWindowController.xib */,
 				1797B8E72780B6E50054BFCD /* ZKSwizzle */,
 				1797B8E12780B6E50054BFCD /* Supporting Files */,
 			);
@@ -205,7 +192,7 @@
 		1797B8D12780B6E50054BFCD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					1797B8D82780B6E50054BFCD = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -240,7 +227,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				17ADB32B2D41DDB8003D0CBF /* battery-light.png in Resources */,
-				177393D62D449B39004DE27F /* BetterLoginWindowController.xib in Resources */,
 				1797B8EC2780B6E50054BFCD /* PrefixHeader.pch in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,10 +248,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1797B8E62780B6E50054BFCD /* BetterLogin.m in Sources */,
-				177393D52D449B39004DE27F /* BetterLoginWindowController.m in Sources */,
 				1744C52C2D45E10800878C4A /* BLPowerCondition.m in Sources */,
 				1797B8EA2780B6E50054BFCD /* ZKSwizzle.m in Sources */,
-				177393D92D449BDC004DE27F /* BLWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +312,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -386,6 +371,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -411,6 +397,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DEVELOPMENT_TEAM = 7ML54VJYG9;
 				DSTROOT = /;
@@ -428,7 +415,7 @@
 					"$(PROJECT_DIR)/BetterLoginApp",
 				);
 				MACH_O_TYPE = mh_dylib;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtac.BetterLogin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
@@ -443,6 +430,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DEVELOPMENT_TEAM = 7ML54VJYG9;
 				DSTROOT = /;
@@ -460,7 +448,7 @@
 					"$(PROJECT_DIR)/BetterLoginApp",
 				);
 				MACH_O_TYPE = mh_dylib;
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtac.BetterLogin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = bundle;
@@ -474,10 +462,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = BetterLoginApp/BetterLoginApp.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 7ML54VJYG9;
 				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -510,10 +500,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = BetterLoginApp/BetterLoginApp.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 7ML54VJYG9;
 				ENABLE_HARDENED_RUNTIME = NO;
 				GENERATE_INFOPLIST_FILE = YES;
