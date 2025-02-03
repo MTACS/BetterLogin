@@ -321,8 +321,9 @@ ZKSwizzleInterface(bl_LUI2BatteryView, LUI2BatteryView, NSView)
 @implementation bl_LUI2BatteryView
 - (void)setBatteryPercentage:(id)percentage {
     ZKOrig(void, percentage);
-    [((LUI2BatteryView *)self).batteryImageView setHidden:YES];
-    [((LUI2BatteryView *)self).batteryTextField setHidden:YES];
+    BOOL usePhoneBattery = [[defaults objectForKey:@"usePhoneBattery"] boolValue];
+    [((LUI2BatteryView *)self).batteryImageView setHidden:usePhoneBattery];
+    [((LUI2BatteryView *)self).batteryTextField setHidden:usePhoneBattery];
 }
 @end
 
@@ -417,6 +418,8 @@ ZKSwizzleInterface(bl_LUI2BackgroundViewController, LUI2BackgroundViewController
     NSURL *settingsAppPath = [workspace URLForApplicationWithBundleIdentifier:@"com.mtac.betterlogin"];
     [workspace openApplicationAtURL:settingsAppPath configuration:[NSWorkspaceOpenConfiguration configuration] completionHandler:nil];
     
+    // Works but can't load defaults for some reason, crashes loginwindow when calling method on hosted controller
+    
     /* NSBundle *settingsBundle = [NSBundle bundleWithPath:@"/Applications/BetterLogin.app"];
     [settingsBundle load];
     NSStoryboard *storyBoard = [NSStoryboard storyboardWithName:@"Main" bundle:settingsBundle];
@@ -449,15 +452,20 @@ ZKSwizzleInterface(bl_LWDefaultScreenLockUI, LWDefaultScreenLockUI, NSObject)
         }
     }
 }
-- (NSString *)goodSamaritanMessage {
-    // NSString *message = [NSString stringWithFormat:@"Battery: %d%%", batteryPercentage()];
+
+// Can be set via Settings app
+
+/* - (NSString *)goodSamaritanMessage {
     return @"";
-}
+} */
+
 - (void)_setAuthHintText:(id)text subHintText:(id)hint {
     BOOL hidePasswordAuthHints = [[defaults objectForKey:@"hidePasswordAuthHints"] boolValue];
     ZKOrig(void, hidePasswordAuthHints ? @"" : text, hidePasswordAuthHints ? @"" : hint);
 }
 @end
+
+// Code below for original BetterLogin for macOS < Sonoma
 
 /* ZKSwizzleInterface(bl_LUIMessageViewController, LUIMessageViewController, NSViewController)
 @implementation bl_LUIMessageViewController
@@ -494,44 +502,6 @@ ZKSwizzleInterface(bl_LUISecureTextField, LUISecureTextField, NSTextField)
 }
 @end */
 
-/* ZKSwizzleInterface(bl_LUI2MessageViewController, LUI2MessageViewController, NSViewController)
-@implementation bl_LUI2MessageViewController
-- (void)viewDidLoad {
-    ZKOrig(void);
-    NSLayoutConstraint *constraint = ((LUI2MessageViewController *)self).messageTextViewHeightConstraint;
-    ((LUI2MessageViewController *)self).messageTextViewHeightConstraint.constant = constraint.constant * 2;
-    // CGRect viewFrame = self.view.frame; // 46 x 24
-    NSImageView *batteryImageView = [[NSImageView alloc] initWithFrame:CGRectZero];
-    batteryImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    batteryImageView.imageScaling = NSImageScaleProportionallyDown;
-    
-    [self.view addSubview:batteryImageView];
-    [batteryImageView setImage:[self batteryImageWithPercent:batteryPercentage()]];
-    
-    NSTextField *batteryPercentField = [[NSTextField alloc] initWithFrame:CGRectZero];
-    batteryPercentField.translatesAutoresizingMaskIntoConstraints = NO;
-    batteryPercentField.font = [NSFont systemFontOfSize:18 weight:NSFontWeightSemibold];
-    batteryPercentField.alignment = NSTextAlignmentCenter;
-    batteryPercentField.editable = NO;
-    batteryPercentField.bordered = NO;
-    batteryPercentField.drawsBackground = NO;
-    // batteryPercentField.cell = [AMPTextFieldCell new];
-    batteryPercentField.textColor = [NSColor colorWithWhite:0.0 alpha:0.6];
-    [batteryPercentField setStringValue:[NSString stringWithFormat:@"%d", (int)(batteryPercentage() * 100)]];
-    [self.view addSubview:batteryPercentField];
-    
-    [NSLayoutConstraint activateConstraints:@[
-        [batteryImageView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        [batteryImageView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
-        [batteryImageView.widthAnchor constraintEqualToConstant:46],
-        [batteryImageView.heightAnchor constraintEqualToConstant:24],
-        [batteryPercentField.centerYAnchor constraintEqualToAnchor:batteryImageView.centerYAnchor constant:2],
-        [batteryPercentField.heightAnchor constraintEqualToConstant:24],
-        [batteryPercentField.leadingAnchor constraintEqualToAnchor:batteryImageView.leadingAnchor],
-        [batteryPercentField.trailingAnchor constraintEqualToAnchor:batteryImageView.trailingAnchor constant:-4],
-    ]];
-}
-@end */
 
 /* ZKSwizzleInterface(bl_LUI2UserView, LUI2UserView, NSView)
 @implementation bl_LUI2UserView
