@@ -33,6 +33,8 @@ lldb -p $(pgrep -x loginwindow)
 expr (void) [[NSBundle bundleWithPath:@"/Library/Application Support/MacEnhance/Plugins/BetterLogin.bundle"] load]
 
 expr (void) [BetterLogin load]
+
+c
 ```
 
 Close terminal window and lock screen
