@@ -11,10 +11,6 @@
 #include <ifaddrs.h>
 #include <arpa/inet.h>
 
-#include <os/log.h>
-#define DLog(N, ...) os_log_with_type(os_log_create("com.mtac.BetterLogin", "DEBUG"),OS_LOG_TYPE_DEFAULT,N ,##__VA_ARGS__)
-
-
 static NSUserDefaults *defaults;
 
 BOOL containsKey(NSString *key) {
@@ -39,19 +35,6 @@ static double batteryPercentage(void) {
     return percentage;
 }
 
-static void dumpViews(NSView* v, int level) {
-    NSString* indent = @"";
-    for (int i = 0; i < level; i++) {
-        indent = [indent stringByAppendingString:@"    "];
-    }
-    NSLog(@"[BETTERLOGIN] %@%@ %@", indent, [v class], NSStringFromRect(v.frame));
-    if (v.subviews != NULL) {
-        for (id s in v.subviews) {
-            dumpViews(s, level + 1);
-        }
-    }
-}
-
 static NSString *internetAddress(void) {
     NSString *address = @"error";
     struct ifaddrs *interfaces = NULL;
@@ -61,14 +44,11 @@ static NSString *internetAddress(void) {
     if (success == 0) {
         temp_addr = interfaces;
         while(temp_addr != NULL) {
-            if(temp_addr->ifa_addr->sa_family == AF_INET) {
+            if (temp_addr->ifa_addr->sa_family == AF_INET) {
                 if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
                     address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
-
                 }
-
             }
-
             temp_addr = temp_addr->ifa_next;
         }
     }
@@ -77,7 +57,6 @@ static NSString *internetAddress(void) {
 }
 
 BetterLogin *plugin;
-static NSMutableDictionary *preferences = nil;
 
 @interface BetterLogin()
 @end
@@ -135,6 +114,21 @@ static NSMutableDictionary *preferences = nil;
     if (!containsKey(@"hidePasswordAuthHints")) {
         [defaults setObject:@(NO) forKey:@"hidePasswordAuthHints"];
     }
+    if (!containsKey(@"useCustomPlaceholder")) {
+        [defaults setObject:@(NO) forKey:@"useCustomPlaceholder"];
+    }
+    if (!containsKey(@"useCustomClockFontFamily")) {
+        [defaults setObject:@(NO) forKey:@"useCustomClockFontFamily"];
+    }
+    if (!containsKey(@"useCustomDateFontFamily")) {
+        [defaults setObject:@(NO) forKey:@"useCustomDateFontFamily"];
+    }
+    if (!containsKey(@"usePhoneBattery")) {
+        [defaults setObject:@(NO) forKey:@"usePhoneBattery"];
+    }
+    if (!containsKey(@"hideTextInput")) {
+        [defaults setObject:@(NO) forKey:@"hideTextInput"];
+    }
     if (!containsKey(@"dateFormat")) {
         [defaults setObject:@"EEEE, MMMM d" forKey:@"dateFormat"];
     }
@@ -162,9 +156,14 @@ static NSMutableDictionary *preferences = nil;
     if (!containsKey(@"batteryFontSize")) {
         [defaults setObject:@(12) forKey:@"batteryFontSize"];
     }
+    if (!containsKey(@"selectedClockFont")) {
+        [defaults setObject:@(0) forKey:@"selectedClockFont"];
+    }
+    if (!containsKey(@"selectedDateFont")) {
+        [defaults setObject:@(0) forKey:@"selectedDateFont"];
+    }
     
     [defaults synchronize];
-    
     [plugin updateBatteryInfo];
 }
 - (void)updateBatteryInfo {
@@ -215,7 +214,6 @@ static NSMutableDictionary *preferences = nil;
     
     NSImage *croppedImage = [[NSImage alloc] initWithSize:NSMakeSize(originalSize.width, croppedHeight)];
     
-
     [croppedImage lockFocus];
     [image drawInRect:NSMakeRect(0, 0, croppedWidth, croppedHeight)
              fromRect:sourceRect
@@ -264,6 +262,13 @@ ZKSwizzleInterface(bl_LUI2BigTimeViewController, LUI2BigTimeViewController, NSVi
     BOOL useCustomClockFont = [[defaults objectForKey:@"useCustomClockFont"] boolValue];
     return useCustomClockFont ? [[defaults objectForKey:@"timeSize"] doubleValue] : ZKOrig(double);
 }
+- (id)_timeFont {
+    BOOL useCustomClockFontFamily = [[defaults objectForKey:@"useCustomClockFontFamily"] boolValue];
+    if (useCustomClockFontFamily) {
+        NSFont *originalFont = ZKOrig(id);
+        return [NSFont fontWithName:[defaults objectForKey:@"clockFontFamily"] size:originalFont.pointSize];
+    } else return ZKOrig(id);
+}
 @end
 
 ZKSwizzleInterface(bl_LUI2DateViewController, LUI2DateViewController, NSViewController)
@@ -283,6 +288,12 @@ ZKSwizzleInterface(bl_LUI2DateViewController, LUI2DateViewController, NSViewCont
     if ([[defaults objectForKey:@"useCustomDateFont"] boolValue]) {
         NSTextField *dateField = ((LUI2DateViewController *)self).dateTextField;
         [dateField setFont:[dateField.font fontWithSize:[[defaults objectForKey:@"dateSize"] doubleValue]]];
+    }
+    
+    if ([[defaults objectForKey:@"useCustomDateFontFamily"] boolValue]) {
+        NSTextField *dateField = ((LUI2DateViewController *)self).dateTextField;
+        NSFont *originalFont = dateField.font;
+        [dateField setFont:[NSFont fontWithName:[defaults objectForKey:@"dateFontFamily"] size:originalFont.pointSize]];
     }
     
     if ([[defaults objectForKey:@"useCustomDateFormat"] boolValue]) {
@@ -326,12 +337,14 @@ ZKSwizzleInterface(bl_LUI2InputMethodViewController, LUI2InputMethodViewControll
 @implementation bl_LUI2InputMethodViewController
 - (void)viewDidLoad {
     ZKOrig(void);
-    NSButton *inputButton = ZKHookIvar(self, NSButton *, "_textInputButton");
-    inputButton.hidden = YES;
-    inputButton.alphaValue = 0.0;
+    if ([[defaults objectForKey:@"hideTextInput"] boolValue]) {
+        NSButton *inputButton = ZKHookIvar(self, NSButton *, "_textInputButton");
+        inputButton.hidden = YES;
+        inputButton.alphaValue = 0.0;
+    }
 }
 - (void)setEnabled:(BOOL)arg1 {
-    ZKOrig(void, NO);
+    ZKOrig(void, ![[defaults objectForKey:@"hideTextInput"] boolValue]);
 }
 @end
 
@@ -376,25 +389,28 @@ ZKSwizzleInterface(bl_LUI2BackgroundViewController, LUI2BackgroundViewController
     [settingsButton setImageScaling:NSImageScaleProportionallyUpOrDown];
     [self.view addSubview:settingsButton]; */
      
-    [self.view addSubview:plugin.batteryImageView];
-    [self.view addSubview:plugin.batteryPercentField];
     
-    [NSLayoutConstraint activateConstraints:@[
-        [plugin.batteryImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:[[defaults objectForKey:@"horizontalOffset"] integerValue]],
-        [plugin.batteryImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:[[defaults objectForKey:@"verticalOffset"] integerValue]],
-        [plugin.batteryImageView.widthAnchor constraintEqualToConstant:32],
-        [plugin.batteryImageView.heightAnchor constraintEqualToConstant:20],
-        [plugin.batteryPercentField.centerYAnchor constraintEqualToAnchor:plugin.batteryImageView.centerYAnchor constant:2],
-        [plugin.batteryPercentField.heightAnchor constraintEqualToConstant:20],
-        [plugin.batteryPercentField.leadingAnchor constraintEqualToAnchor:plugin.batteryImageView.leadingAnchor],
-        [plugin.batteryPercentField.trailingAnchor constraintEqualToAnchor:plugin.batteryImageView.trailingAnchor constant:-2],
-        /* [settingsButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:6],
-        [settingsButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:10],
-        [settingsButton.widthAnchor constraintEqualToConstant:20],
-        [settingsButton.heightAnchor constraintEqualToConstant:20], */
-    ]];
-    
-    [plugin updateBatteryInfo];
+    if ([[defaults objectForKey:@"usePhoneBattery"] boolValue]) {
+        [self.view addSubview:plugin.batteryImageView];
+        [self.view addSubview:plugin.batteryPercentField];
+        
+        [NSLayoutConstraint activateConstraints:@[
+            [plugin.batteryImageView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:[[defaults objectForKey:@"horizontalOffset"] integerValue]],
+            [plugin.batteryImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:[[defaults objectForKey:@"verticalOffset"] integerValue]],
+            [plugin.batteryImageView.widthAnchor constraintEqualToConstant:32],
+            [plugin.batteryImageView.heightAnchor constraintEqualToConstant:20],
+            [plugin.batteryPercentField.centerYAnchor constraintEqualToAnchor:plugin.batteryImageView.centerYAnchor constant:2],
+            [plugin.batteryPercentField.heightAnchor constraintEqualToConstant:20],
+            [plugin.batteryPercentField.leadingAnchor constraintEqualToAnchor:plugin.batteryImageView.leadingAnchor],
+            [plugin.batteryPercentField.trailingAnchor constraintEqualToAnchor:plugin.batteryImageView.trailingAnchor constant:-2],
+            /* [settingsButton.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:6],
+             [settingsButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:10],
+             [settingsButton.widthAnchor constraintEqualToConstant:20],
+             [settingsButton.heightAnchor constraintEqualToConstant:20], */
+        ]];
+        
+        [plugin updateBatteryInfo];
+    }
 }
 - (void)openSettings:(NSButton *)sender {
     NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
@@ -420,7 +436,18 @@ ZKSwizzleInterface(bl_LWDefaultScreenLockUI, LWDefaultScreenLockUI, NSObject)
 @implementation bl_LWDefaultScreenLockUI
 - (void)setPasswordFieldPlaceholderString:(NSString *)arg1 {
     BOOL hidePasswordPlaceholder = [[defaults objectForKey:@"hidePasswordPlaceholder"] boolValue];
-    ZKOrig(void, (hidePasswordPlaceholder) ? @"" : arg1);
+    BOOL useCustomPlaceholder = [[defaults objectForKey:@"useCustomPlaceholder"] boolValue];
+    if (hidePasswordPlaceholder) {
+        ZKOrig(void, @"");
+    } else {
+        if (useCustomPlaceholder) {
+            if ([defaults objectForKey:@"placeholderString"]) {
+                ZKOrig(void, [defaults objectForKey:@"placeholderString"]);
+            }
+        } else {
+            ZKOrig(void, arg1);
+        }
+    }
 }
 - (NSString *)goodSamaritanMessage {
     // NSString *message = [NSString stringWithFormat:@"Battery: %d%%", batteryPercentage()];

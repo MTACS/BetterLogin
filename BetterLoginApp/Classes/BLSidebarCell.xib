@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="BLSidebarCell"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView identifier="sidebarCell" id="c22-O7-iKe" customClass="BLSidebarCell">
+            <rect key="frame" x="0.0" y="0.0" width="130" height="32"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ejz-Su-IYq">
+                    <rect key="frame" x="3" y="4" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="263-pO-1Jz"/>
+                        <constraint firstAttribute="height" constant="24" id="5P0-bh-JAH"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="7lA-lk-9He"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="cgM-DO-DoZ"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="LGL-0o-Hiz"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zyn-oK-ypz">
+                    <rect key="frame" x="31" y="8" width="95" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="uEQ-FN-JNQ">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="ejz-Su-IYq" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="3" id="31f-5f-Nva"/>
+                <constraint firstItem="zyn-oK-ypz" firstAttribute="leading" secondItem="ejz-Su-IYq" secondAttribute="trailing" constant="6" id="AiX-Gs-HSp"/>
+                <constraint firstItem="ejz-Su-IYq" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="K9d-u5-GDd"/>
+                <constraint firstAttribute="trailing" secondItem="zyn-oK-ypz" secondAttribute="trailing" constant="6" id="brb-va-eVG"/>
+                <constraint firstItem="zyn-oK-ypz" firstAttribute="leading" secondItem="ejz-Su-IYq" secondAttribute="trailing" constant="6" id="gjb-FU-TDa"/>
+                <constraint firstItem="zyn-oK-ypz" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="zeo-YS-91x"/>
+            </constraints>
+            <connections>
+                <outlet property="imageView" destination="ejz-Su-IYq" id="jZb-gL-81e"/>
+                <outlet property="titleLabel" destination="zyn-oK-ypz" id="V5V-3w-xV4"/>
+            </connections>
+            <point key="canvasLocation" x="44" y="-36"/>
+        </customView>
+        <customObject id="wZS-rx-fPl" customClass="BLSidebarCell"/>
+    </objects>
+</document>

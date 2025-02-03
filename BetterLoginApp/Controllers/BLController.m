@@ -17,6 +17,23 @@ BOOL containsKey(NSString *key) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadDefaults];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabSelectionChanged:) name:@"BLTabSelectionChanged" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAboutView) name:@"BLShowAboutView" object:nil];
+    
+    [self.tabView selectTabViewItemAtIndex:0];
+    
+    NSArray *availableFonts = [[NSFontManager sharedFontManager] availableFontFamilies];
+    for (NSString *fontFamily in availableFonts) {
+        [self.clockFontButton addItemWithTitle:fontFamily];
+        [self.dateFontButton addItemWithTitle:fontFamily];
+    }
+}
+- (void)tabSelectionChanged:(NSNotification *)notification {
+    NSDictionary *tabDict = notification.userInfo;
+    NSInteger selectedIndex = [[tabDict objectForKey:@"selectedTab"] integerValue];
+    [self.tabView selectTabViewItemAtIndex:selectedIndex];
 }
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
@@ -48,6 +65,18 @@ BOOL containsKey(NSString *key) {
         [defaults setObject:@(NO) forKey:@"hidePasswordAuthHints"];
     }
     
+    if (!containsKey(@"useCustomPlaceholder")) {
+        [defaults setObject:@(NO) forKey:@"useCustomPlaceholder"];
+    }
+    
+    if (!containsKey(@"usePhoneBattery")) {
+        [defaults setObject:@(NO) forKey:@"usePhoneBattery"];
+    }
+    
+    if (!containsKey(@"hideTextInput")) {
+        [defaults setObject:@(NO) forKey:@"hideTextInput"];
+    }
+    
     if (!containsKey(@"dateFormat")) {
         [defaults setObject:@"EEEE, MMMM d" forKey:@"dateFormat"];
     }
@@ -63,13 +92,27 @@ BOOL containsKey(NSString *key) {
     if (!containsKey(@"timePosition")) {
         [defaults setObject:@(0) forKey:@"timePosition"];
     }
-    
     if (!containsKey(@"datePosition")) {
         [defaults setObject:@(0) forKey:@"datePosition"];
     }
-    
     if (!containsKey(@"selectedBlurStyle")) {
         [defaults setObject:@(6) forKey:@"selectedBlurStyle"];
+    }
+    if (!containsKey(@"selectedClockFont")) {
+        [defaults setObject:@(0) forKey:@"selectedClockFont"];
+    }
+    if (!containsKey(@"selectedDateFont")) {
+        [defaults setObject:@(0) forKey:@"selectedDateFont"];
+    }
+    
+    NSArray *availableFonts = [[NSFontManager sharedFontManager] availableFontFamilies];
+    
+    if (!containsKey(@"clockFontFamily")) {
+        [defaults setObject:availableFonts[0] forKey:@"clockFontFamily"];
+    }
+    
+    if (!containsKey(@"dateFontFamily")) {
+        [defaults setObject:availableFonts[0] forKey:@"dateFontFamily"];
     }
     
     [defaults synchronize];
@@ -82,9 +125,17 @@ BOOL containsKey(NSString *key) {
     self.dateFormatSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"useCustomDateFormat"] boolValue] ?: NO;
     self.placeholderSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"hidePasswordPlaceholder"] boolValue] ?: NO;
     self.authHintSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"hidePasswordAuthHints"] boolValue] ?: NO;
+    self.customClockFontSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"useCustomClockFontFamily"] boolValue] ?: NO;
+    self.customDateFontSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"useCustomDateFontFamily"] boolValue] ?: NO;
+    self.customPlaceholderSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"useCustomPlaceholder"] boolValue] ?: NO;
+    self.batterySwitch.state = (NSControlStateValue)[[defaults objectForKey:@"usePhoneBattery"] boolValue] ?: NO;
+    self.textInputSwitch.state = (NSControlStateValue)[[defaults objectForKey:@"hideTextInput"] boolValue] ?: NO;
     
     NSString *dateFormat = [defaults objectForKey:@"dateFormat"];
     self.dateFormatInput.stringValue = ([dateFormat isEqualToString:@"EEEE, MMMM d"]) ? @"" : dateFormat;
+    
+    NSString *placeholderString = [defaults objectForKey:@"placeholderString"];
+    self.customPlaceholderInput.stringValue = (placeholderString != nil) ? placeholderString : @"";
     
     NSNumber *timeSize = [defaults objectForKey:@"timeSize"];
     self.clockSizeInput.stringValue = ([timeSize integerValue] == 108) ? @"" : [NSString stringWithFormat:@"%ld", [timeSize integerValue]];
@@ -114,12 +165,34 @@ BOOL containsKey(NSString *key) {
     }
     [self.blurStyleButton selectItem:selectedBlurItem];
     
+    [self.clockFontButton selectItemAtIndex:[[defaults objectForKey:@"selectedClockFont"] integerValue]];
+    [self.dateFontButton selectItemAtIndex:[[defaults objectForKey:@"selectedDateFont"] integerValue]];
     // [self.blurStyleButton selectItem:[self.blurStyleButton.itemArray objectAtIndex:[[self blurStyles] indexOfObject:selectedBlurStyle]]];
 }
 - (BOOL)checkNumber:(NSString *)input {
     NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
     NSNumber *checkNumber = [numberFormatter numberFromString:input];
     return checkNumber != nil;
+}
+- (void)showAboutView {
+    [self.tabView selectTabViewItemAtIndex:5];
+}
+- (IBAction)viewSource:(NSButton *)sender {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://github.com/MTACS/BetterLogin"]];
+}
+- (IBAction)selectClockFontIndex:(NSPopUpButton *)sender {
+    NSArray *availableFonts = [[NSFontManager sharedFontManager] availableFontFamilies];
+    NSInteger selectedIndex = [sender.itemArray indexOfObject:sender.selectedItem];
+    [defaults setObject:[NSNumber numberWithInteger:selectedIndex] forKey:@"selectedClockFont"];
+    [defaults setObject:[availableFonts objectAtIndex:selectedIndex] forKey:@"clockFontFamily"];
+    [defaults synchronize];
+}
+- (IBAction)selectDateFontIndex:(NSPopUpButton *)sender {
+    NSArray *availableFonts = [[NSFontManager sharedFontManager] availableFontFamilies];
+    NSInteger selectedIndex = [sender.itemArray indexOfObject:sender.selectedItem];
+    [defaults setObject:[NSNumber numberWithInteger:selectedIndex] forKey:@"selectedDateFont"];
+    [defaults setObject:[availableFonts objectAtIndex:selectedIndex] forKey:@"dateFontFamily"];
+    [defaults synchronize];
 }
 - (IBAction)blurStyleChanged:(NSPopUpButton *)sender {
     NSMenuItem *selectedItem = sender.selectedItem;
@@ -158,8 +231,16 @@ BOOL containsKey(NSString *key) {
     [defaults setObject:@(sender.state) forKey:@"useCustomDateFormat"];
     [defaults synchronize];
 }
+- (IBAction)customDateFontSwitchChanged:(NSSwitch *)sender {
+    [defaults setObject:@(sender.state) forKey:@"useCustomDateFontFamily"];
+    [defaults synchronize];
+}
 - (IBAction)dateFontSwitchChanged:(NSSwitch *)sender {
     [defaults setObject:@(sender.state) forKey:@"useCustomDateFont"];
+    [defaults synchronize];
+}
+- (IBAction)customClockFontSwitchChanged:(NSSwitch *)sender {
+    [defaults setObject:@(sender.state) forKey:@"useCustomClockFontFamily"];
     [defaults synchronize];
 }
 - (IBAction)clockFontSwitchChanged:(NSSwitch *)sender {
@@ -169,6 +250,25 @@ BOOL containsKey(NSString *key) {
 - (IBAction)blurSwitchChanged:(NSSwitch *)sender {
     [defaults setObject:@(sender.state) forKey:@"blurEnabled"];
     [defaults synchronize];
+}
+- (IBAction)batterySwitchChanged:(NSSwitch *)sender {
+    [defaults setObject:@(sender.state) forKey:@"usePhoneBattery"];
+    [defaults synchronize];
+}
+- (IBAction)inputSwitchChanged:(NSSwitch *)sender {
+    [defaults setObject:@(sender.state) forKey:@"hideTextInput"];
+    [defaults synchronize];
+}
+- (IBAction)customPlaceholdeSwitchChanged:(NSSwitch *)sender {
+    [defaults setObject:@(sender.state) forKey:@"useCustomPlaceholder"];
+    [defaults synchronize];
+}
+- (IBAction)placeholderInputChangec:(NSTextField *)sender {
+    NSString *customPlaceholderString = sender.stringValue;
+    if (customPlaceholderString.length != 0) {
+        [defaults setObject:customPlaceholderString forKey:@"placeholderString"];
+        [defaults synchronize];
+    }
 }
 - (IBAction)timeSizeChanged:(NSTextField *)sender {
     NSString *clockSizeInput = sender.stringValue;

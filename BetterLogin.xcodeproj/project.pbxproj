@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1744C52C2D45E10800878C4A /* BLPowerCondition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1744C52B2D45E10800878C4A /* BLPowerCondition.m */; };
+		176FFB922D4C77B100582073 /* BLSidebarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 176FFB912D4C77B100582073 /* BLSidebarController.m */; };
+		176FFB952D4C7DCC00582073 /* BLSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 176FFB942D4C7DCC00582073 /* BLSplitView.m */; };
+		176FFB982D4C7E9000582073 /* BLWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 176FFB972D4C7E9000582073 /* BLWindow.m */; };
+		176FFB9C2D4C851F00582073 /* BLSidebarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 176FFB9B2D4C851F00582073 /* BLSidebarCell.xib */; };
+		176FFB9F2D4C853F00582073 /* BLSidebarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 176FFB9E2D4C853F00582073 /* BLSidebarCell.m */; };
+		176FFBA22D4C8E3A00582073 /* BLTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 176FFBA12D4C8E3A00582073 /* BLTableRowView.m */; };
 		1797B8DD2780B6E50054BFCD /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1797B8DC2780B6E50054BFCD /* AppKit.framework */; };
 		1797B8DF2780B6E50054BFCD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1797B8DE2780B6E50054BFCD /* Foundation.framework */; };
 		1797B8E62780B6E50054BFCD /* BetterLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1797B8E52780B6E50054BFCD /* BetterLogin.m */; };
@@ -25,6 +31,17 @@
 /* Begin PBXFileReference section */
 		1744C52A2D45E10800878C4A /* BLPowerCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLPowerCondition.h; sourceTree = "<group>"; };
 		1744C52B2D45E10800878C4A /* BLPowerCondition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLPowerCondition.m; sourceTree = "<group>"; };
+		176FFB902D4C77B100582073 /* BLSidebarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLSidebarController.h; sourceTree = "<group>"; };
+		176FFB912D4C77B100582073 /* BLSidebarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLSidebarController.m; sourceTree = "<group>"; };
+		176FFB932D4C7DCC00582073 /* BLSplitView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLSplitView.h; sourceTree = "<group>"; };
+		176FFB942D4C7DCC00582073 /* BLSplitView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLSplitView.m; sourceTree = "<group>"; };
+		176FFB962D4C7E9000582073 /* BLWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLWindow.h; sourceTree = "<group>"; };
+		176FFB972D4C7E9000582073 /* BLWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLWindow.m; sourceTree = "<group>"; };
+		176FFB9B2D4C851F00582073 /* BLSidebarCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BLSidebarCell.xib; sourceTree = "<group>"; };
+		176FFB9D2D4C853F00582073 /* BLSidebarCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLSidebarCell.h; sourceTree = "<group>"; };
+		176FFB9E2D4C853F00582073 /* BLSidebarCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLSidebarCell.m; sourceTree = "<group>"; };
+		176FFBA02D4C8E3A00582073 /* BLTableRowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLTableRowView.h; sourceTree = "<group>"; };
+		176FFBA12D4C8E3A00582073 /* BLTableRowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BLTableRowView.m; sourceTree = "<group>"; };
 		177978512D49DC4400E0E981 /* libMTPreferences.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libMTPreferences.dylib; path = BetterLoginApp/libMTPreferences.dylib; sourceTree = "<group>"; };
 		1797B8D92780B6E50054BFCD /* BetterLogin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BetterLogin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		1797B8DC2780B6E50054BFCD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -70,6 +87,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		176FFB992D4C7F5D00582073 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				176FFB932D4C7DCC00582073 /* BLSplitView.h */,
+				176FFB942D4C7DCC00582073 /* BLSplitView.m */,
+				176FFB962D4C7E9000582073 /* BLWindow.h */,
+				176FFB972D4C7E9000582073 /* BLWindow.m */,
+				176FFBA02D4C8E3A00582073 /* BLTableRowView.h */,
+				176FFBA12D4C8E3A00582073 /* BLTableRowView.m */,
+				176FFB9D2D4C853F00582073 /* BLSidebarCell.h */,
+				176FFB9E2D4C853F00582073 /* BLSidebarCell.m */,
+				176FFB9B2D4C851F00582073 /* BLSidebarCell.xib */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		176FFB9A2D4C7F6C00582073 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				17F50EAE2A7AF78800D77BB4 /* BLController.h */,
+				17F50EAF2A7AF78800D77BB4 /* BLController.m */,
+				176FFB902D4C77B100582073 /* BLSidebarController.h */,
+				176FFB912D4C77B100582073 /* BLSidebarController.m */,
+				17F50EBC2A7AF90500D77BB4 /* BLWindowController.h */,
+				17F50EBD2A7AF90500D77BB4 /* BLWindowController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		1797B8D02780B6E50054BFCD = {
 			isa = PBXGroup;
 			children = (
@@ -135,12 +181,10 @@
 			isa = PBXGroup;
 			children = (
 				17F50EBF2A7B150100D77BB4 /* Info.plist */,
+				176FFB992D4C7F5D00582073 /* Classes */,
+				176FFB9A2D4C7F6C00582073 /* Controllers */,
 				17F50EAB2A7AF78800D77BB4 /* AppDelegate.h */,
 				17F50EAC2A7AF78800D77BB4 /* AppDelegate.m */,
-				17F50EAE2A7AF78800D77BB4 /* BLController.h */,
-				17F50EAF2A7AF78800D77BB4 /* BLController.m */,
-				17F50EBC2A7AF90500D77BB4 /* BLWindowController.h */,
-				17F50EBD2A7AF90500D77BB4 /* BLWindowController.m */,
 				17F50EB12A7AF78900D77BB4 /* Assets.xcassets */,
 				17F50EB32A7AF78900D77BB4 /* Main.storyboard */,
 				17F50EB62A7AF78900D77BB4 /* main.m */,
@@ -237,6 +281,7 @@
 			files = (
 				17F50EB22A7AF78900D77BB4 /* Assets.xcassets in Resources */,
 				17F50EB52A7AF78900D77BB4 /* Main.storyboard in Resources */,
+				176FFB9C2D4C851F00582073 /* BLSidebarCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,7 +303,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				17F50EB02A7AF78800D77BB4 /* BLController.m in Sources */,
+				176FFB952D4C7DCC00582073 /* BLSplitView.m in Sources */,
+				176FFB9F2D4C853F00582073 /* BLSidebarCell.m in Sources */,
 				17F50EBE2A7AF90500D77BB4 /* BLWindowController.m in Sources */,
+				176FFB982D4C7E9000582073 /* BLWindow.m in Sources */,
+				176FFBA22D4C8E3A00582073 /* BLTableRowView.m in Sources */,
+				176FFB922D4C77B100582073 /* BLSidebarController.m in Sources */,
 				17F50EB72A7AF78900D77BB4 /* main.m in Sources */,
 				17F50EAD2A7AF78800D77BB4 /* AppDelegate.m in Sources */,
 			);

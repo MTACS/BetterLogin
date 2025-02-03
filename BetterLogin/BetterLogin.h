@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "ZKSwizzle/ZKSwizzle.h"
 #import "BLPowerCondition.h"
-#import "../BetterLoginApp/BLWindowController.h"
 #include <dlfcn.h>
 
 #define osx_ver_max [[NSProcessInfo processInfo] operatingSystemVersion].majorVersion
@@ -67,6 +66,7 @@ NSVisualEffectMaterialUnderPageBackground = 22,
 
 @interface LUI2DateViewController : LUI2ViewController
 @property (retain) NSTextField *dateTextField;
++ (double)fontSize;
 @end
 
 @interface LUI2BatteryView : NSStackView

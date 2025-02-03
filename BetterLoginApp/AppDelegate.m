@@ -23,6 +23,9 @@ extern void SACLockScreenImmediate(void);
         }
     }
 }
+- (IBAction)showAboutView:(id)sender {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BLShowAboutView" object:nil];
+}
 - (IBAction)resetPreferences:(NSButton *)sender {
     NSAlert *alert = [[NSAlert alloc] init];
     [alert setMessageText:@"Reset All Preferences?"];
